@@ -2,14 +2,14 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Vincent Liu</title>
-    <link>https://vincentliu3.github.io/</link>
-      <atom:link href="https://vincentliu3.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <link>https://vincentliu3.github.io/authors/vincent-liu/</link>
+      <atom:link href="https://vincentliu3.github.io/authors/vincent-liu/index.xml" rel="self" type="application/rss+xml" />
     <description>Vincent Liu</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 01 Jan 2019 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://vincentliu3.github.io/img/icon-192.png</url>
       <title>Vincent Liu</title>
-      <link>https://vincentliu3.github.io/</link>
+      <link>https://vincentliu3.github.io/authors/vincent-liu/</link>
     </image>
     
     <item>
