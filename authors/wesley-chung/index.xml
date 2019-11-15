@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>1 | Vincent Liu</title>
-    <link>https://vincentliu3.github.io/publication_types/1/</link>
-      <atom:link href="https://vincentliu3.github.io/publication_types/1/index.xml" rel="self" type="application/rss+xml" />
-    <description>1</description>
+    <title>Wesley Chung | Vincent Liu</title>
+    <link>https://vincentliu3.github.io/authors/wesley-chung/</link>
+      <atom:link href="https://vincentliu3.github.io/authors/wesley-chung/index.xml" rel="self" type="application/rss+xml" />
+    <description>Wesley Chung</description>
     <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 01 Jan 2019 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://vincentliu3.github.io/img/icon-192.png</url>
-      <title>1</title>
-      <link>https://vincentliu3.github.io/publication_types/1/</link>
+      <title>Wesley Chung</title>
+      <link>https://vincentliu3.github.io/authors/wesley-chung/</link>
     </image>
     
     <item>
@@ -17,14 +17,6 @@
       <link>https://vincentliu3.github.io/publication/bennett-2019-incrementally/</link>
       <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
       <guid>https://vincentliu3.github.io/publication/bennett-2019-incrementally/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>The Utility of Sparse Representations for Control in Reinforcement Learning</title>
-      <link>https://vincentliu3.github.io/publication/liu-2019-utility/</link>
-      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://vincentliu3.github.io/publication/liu-2019-utility/</guid>
       <description></description>
     </item>
     

@@ -13,6 +13,22 @@
     </image>
     
     <item>
+      <title>Brendan Bennett</title>
+      <link>https://vincentliu3.github.io/authors/brendan-bennett/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://vincentliu3.github.io/authors/brendan-bennett/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Hengshuai Yao</title>
+      <link>https://vincentliu3.github.io/authors/hengshuai-yao/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://vincentliu3.github.io/authors/hengshuai-yao/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Lei Le</title>
       <link>https://vincentliu3.github.io/authors/lei-le/</link>
       <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
@@ -29,6 +45,14 @@
     </item>
     
     <item>
+      <title>Muhammad Zaheer</title>
+      <link>https://vincentliu3.github.io/authors/muhammad-zaheer/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://vincentliu3.github.io/authors/muhammad-zaheer/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>Raksha Kumaraswamy</title>
       <link>https://vincentliu3.github.io/authors/raksha-kumaraswamy/</link>
       <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
@@ -41,6 +65,14 @@
       <link>https://vincentliu3.github.io/authors/vincent-liu/</link>
       <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
       <guid>https://vincentliu3.github.io/authors/vincent-liu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Wesley Chung</title>
+      <link>https://vincentliu3.github.io/authors/wesley-chung/</link>
+      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
+      <guid>https://vincentliu3.github.io/authors/wesley-chung/</guid>
       <description></description>
     </item>
     
@@ -89,7 +121,7 @@
       <link>https://vincentliu3.github.io/authors/admin/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://vincentliu3.github.io/authors/admin/</guid>
-      <description>&lt;p&gt;I am a PhD student at the University of Alberta, supervised by Prof. Martha White. I am broadly interested in sequential decision making in the real world.&lt;/p&gt;
+      <description>&lt;p&gt;I am currently a PhD student in the &lt;a href=&#34;http://rlai.ualberta.ca/&#34; target=&#34;_blank&#34;&gt;RLAI Lab&lt;/a&gt; at the University of Alberta, working with &lt;a href=&#34;http://webdocs.cs.ualberta.ca/~whitem/&#34; target=&#34;_blank&#34;&gt;Professor Martha White&lt;/a&gt;. I am broadly interested in sequential decision making in the real world.&lt;/p&gt;
 </description>
     </item>
     
