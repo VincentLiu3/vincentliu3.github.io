@@ -5,12 +5,20 @@
     <link>https://vincentliu3.github.io/</link>
       <atom:link href="https://vincentliu3.github.io/index.xml" rel="self" type="application/rss+xml" />
     <description>Vincent Liu</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 01 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://vincentliu3.github.io/img/icon-192.png</url>
       <title>Vincent Liu</title>
       <link>https://vincentliu3.github.io/</link>
     </image>
+    
+    <item>
+      <title>Training Recurrent Neural Networks Online by Learning Explicit State Variables</title>
+      <link>https://vincentliu3.github.io/publication/nath-2020-training/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://vincentliu3.github.io/publication/nath-2020-training/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Incrementally Learning Functions of the Return</title>
@@ -29,15 +37,7 @@
     </item>
     
     <item>
-      <title>Toward Understanding Catastrophic Interference in Value-based Reinforcement Learning</title>
-      <link>https://vincentliu3.github.io/publication/liu-2019-toward/</link>
-      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://vincentliu3.github.io/publication/liu-2019-toward/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Attribute-aware Collaborative Filtering: Survey and Classification</title>
+      <title>Attribute-Aware Recommender System Based on Collaborative Filtering: Survey and Classification</title>
       <link>https://vincentliu3.github.io/publication/chen-2018-attribute/</link>
       <pubDate>Mon, 01 Jan 2018 00:00:00 +0000</pubDate>
       <guid>https://vincentliu3.github.io/publication/chen-2018-attribute/</guid>

@@ -5,12 +5,52 @@
     <link>https://vincentliu3.github.io/authors/</link>
       <atom:link href="https://vincentliu3.github.io/authors/index.xml" rel="self" type="application/rss+xml" />
     <description>Authors</description>
-    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Tue, 01 Jan 2019 00:00:00 +0000</lastBuildDate>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Wed, 01 Jan 2020 00:00:00 +0000</lastBuildDate>
     <image>
       <url>https://vincentliu3.github.io/img/icon-192.png</url>
       <title>Authors</title>
       <link>https://vincentliu3.github.io/authors/</link>
     </image>
+    
+    <item>
+      <title>Adam White</title>
+      <link>https://vincentliu3.github.io/authors/adam-white/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://vincentliu3.github.io/authors/adam-white/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Alan Chan</title>
+      <link>https://vincentliu3.github.io/authors/alan-chan/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://vincentliu3.github.io/authors/alan-chan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Martha White</title>
+      <link>https://vincentliu3.github.io/authors/martha-white/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://vincentliu3.github.io/authors/martha-white/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Somjit Nath</title>
+      <link>https://vincentliu3.github.io/authors/somjit-nath/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://vincentliu3.github.io/authors/somjit-nath/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Vincent Liu</title>
+      <link>https://vincentliu3.github.io/authors/vincent-liu/</link>
+      <pubDate>Wed, 01 Jan 2020 00:00:00 +0000</pubDate>
+      <guid>https://vincentliu3.github.io/authors/vincent-liu/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>Brendan Bennett</title>
@@ -21,26 +61,10 @@
     </item>
     
     <item>
-      <title>Hengshuai Yao</title>
-      <link>https://vincentliu3.github.io/authors/hengshuai-yao/</link>
-      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://vincentliu3.github.io/authors/hengshuai-yao/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>Lei Le</title>
       <link>https://vincentliu3.github.io/authors/lei-le/</link>
       <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
       <guid>https://vincentliu3.github.io/authors/lei-le/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Martha White</title>
-      <link>https://vincentliu3.github.io/authors/martha-white/</link>
-      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://vincentliu3.github.io/authors/martha-white/</guid>
       <description></description>
     </item>
     
@@ -57,14 +81,6 @@
       <link>https://vincentliu3.github.io/authors/raksha-kumaraswamy/</link>
       <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
       <guid>https://vincentliu3.github.io/authors/raksha-kumaraswamy/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>Vincent Liu</title>
-      <link>https://vincentliu3.github.io/authors/vincent-liu/</link>
-      <pubDate>Tue, 01 Jan 2019 00:00:00 +0000</pubDate>
-      <guid>https://vincentliu3.github.io/authors/vincent-liu/</guid>
       <description></description>
     </item>
     
@@ -121,7 +137,7 @@
       <link>https://vincentliu3.github.io/authors/admin/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>https://vincentliu3.github.io/authors/admin/</guid>
-      <description>&lt;p&gt;I am currently a PhD student in the &lt;a href=&#34;http://rlai.ualberta.ca/&#34; target=&#34;_blank&#34;&gt;RLAI Lab&lt;/a&gt; at the University of Alberta, working with &lt;a href=&#34;http://webdocs.cs.ualberta.ca/~whitem/&#34; target=&#34;_blank&#34;&gt;Professor Martha White&lt;/a&gt;. I am broadly interested in sequential decision making in the real world.&lt;/p&gt;
+      <description>&lt;p&gt;I am currently a PhD student in the &lt;a href=&#34;http://rlai.ualberta.ca/&#34; target=&#34;_blank&#34;&gt;RLAI Lab&lt;/a&gt; at the University of Alberta, working with &lt;a href=&#34;http://webdocs.cs.ualberta.ca/~whitem/&#34; target=&#34;_blank&#34;&gt;Professor Martha White&lt;/a&gt;. I am interested in sequential decision making in the real world.&lt;/p&gt;
 </description>
     </item>
     
