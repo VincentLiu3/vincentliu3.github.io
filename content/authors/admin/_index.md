@@ -50,7 +50,7 @@ education:
     date_start: 2019-09-01
     date_end: 2023-12-30
     summary: |
-      123
+      Research on offline reinforcement learning
     button:
       text: 'Read Thesis'
       url: 'https://era.library.ualberta.ca/items/82e3495b-3120-452f-9ef5-eb0a1697e504'
@@ -125,8 +125,10 @@ skills:
 #   Begin multi-line `summary` with YAML's `|` or `|2-` multi-line prefix and indent 2 spaces below.
 awards:
   - title: Borealis AI Fellowship
-    # url: https://www.coursera.org/learn/neural-networks-deep-learning
     date: '2021-09-01'
+  - title: Alberta Graduate Excellence Scholarship
+    date: '2020-09-01'
+    # url: https://www.coursera.org/learn/neural-networks-deep-learning
     # awarder: Coursera
     # icon: coursera
     # summary: |
