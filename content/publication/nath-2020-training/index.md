@@ -2,7 +2,7 @@
 title: Training Recurrent Neural Networks Online by Learning Explicit State Variables
 authors:
 - Somjit Nath
-- Vincent Liu
+- admin
 - Alan Chan
 - Adam White
 - Martha White

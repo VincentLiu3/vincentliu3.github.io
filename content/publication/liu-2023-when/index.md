@@ -1,7 +1,7 @@
 ---
 title: When is Offline Policy Selection Feasible for Reinforcement Learning?
 authors:
-- Vincent Liu
+- admin
 - Prabhat Nagarajan
 - Andrew Patterson
 - Martha White

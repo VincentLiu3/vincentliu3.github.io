@@ -3,7 +3,7 @@ title: Switching the Loss Reduces the Cost in Batch Reinforcement Learning
 authors:
 - Alex Ayoub
 - Kaiwen Wang
-- Vincent Liu
+- admin
 - Samuel Robertson
 - James McInerney
 - Dawen Liang

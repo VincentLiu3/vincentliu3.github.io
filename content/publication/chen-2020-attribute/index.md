@@ -5,7 +5,7 @@ authors:
 - Wen-Hao Chen
 - Chin-Chi Hsu
 - Yi-An Lai
-- Vincent Liu
+- admin
 - Mi-Yen Yeh
 - Shou-De Lin
 date: '2019-01-01'

@@ -1,7 +1,7 @@
 ---
 title: Measuring and Mitigating Interference in Reinforcement Learning
 authors:
-- Vincent Liu
+- admin
 - Han Wang
 - Ruo Yu Tao
 - Khurram Javed

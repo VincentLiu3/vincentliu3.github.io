@@ -1,7 +1,7 @@
 ---
 title: The utility of sparse representations for control in reinforcement learning
 authors:
-- Vincent Liu
+- admin
 - Raksha Kumaraswamy
 - Lei Le
 - Martha White

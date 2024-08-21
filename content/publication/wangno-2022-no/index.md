@@ -5,7 +5,7 @@ authors:
 - Archit Sakhadeo
 - Adam M White
 - James M Bell
-- Vincent Liu
+- admin
 - Xutong Zhao
 - Puer Liu
 - Tadashi Kozuno

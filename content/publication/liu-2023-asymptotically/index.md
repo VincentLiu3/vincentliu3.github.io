@@ -2,7 +2,7 @@
 title: Asymptotically Unbiased Off-Policy Policy Evaluation when Reusing Old Data
   in Nonstationary Environments
 authors:
-- Vincent Liu
+- admin
 - Yash Chandak
 - Philip Thomas
 - Martha White
