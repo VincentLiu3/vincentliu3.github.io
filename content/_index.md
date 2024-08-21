@@ -30,29 +30,6 @@ sections:
           size: cover
           position: center
           parallax: false
-  # - block: markdown
-  #   content:
-  #     title: '📚 My Research'
-  #     subtitle: ''
-  #     text: |-
-  #       Use this area to speak to your mission. I'm a research scientist in the Moonshot team at DeepMind. I blog about machine learning, deep learning, and moonshots.
-
-  #       I apply a range of qualitative and quantitative methods to comprehensively investigate the role of science and technology in the economy.
-        
-  #       Please reach out to collaborate 😃
-  #   design:
-  #     columns: '1'
-  # - block: collection
-  #   id: papers
-  #   content:
-  #     title: Featured Publications
-  #     filters:
-  #       folders:
-  #         - publication
-  #       featured_only: true
-  #   design:
-  #     view: article-grid
-  #     columns: 2
   - block: collection
     content:
       title: Recent Publications
@@ -65,23 +42,11 @@ sections:
       view: citation
   - block: markdown
     content:
-      title: Teaching
+      title: 'Teaching'
+      subtitle: ''
       text: |-
-      Instructor, University of British Columbia
-        <ul>
-          <li>DSCI 512 Algorithms and Data Structures, Fall 2024</li>
-          <li>DSCI 551 Descriptive Statistics and Probability for Data Science, Fall 2024</li>
-          <li>DSCI 573 Feature and Model Selection, Fall 2024</li>
-          <li>DSCI 574 Spatial and Temporal Models, Winter 2025</li>
-          <li>DSCI 575 Advanced Machine Learning, Winter 2025</li>
-        </ul>
-      
-      Teaching Assistant, University of Alberta
-        <ul>
-          <li>[CMPUT 655  Reinforcement Learning I](https://amw8.github.io/grad-rl-one/), Fall 2022</li>
-          <li>[CMPUT 298 Basic of Machine Learning](https://marthawhite.github.io/mlbasics/), Winter 2020</li>
-          <li>CMPUT 175 Introduction to the Foundations of Computation II, Fall 2017 and Winter 2018</li>
-        </ul>
+        Instructor, University of British Columbia
+        Teaching Assistant, University of Alberta
     design:
       columns: '1'
   # - block: collection
