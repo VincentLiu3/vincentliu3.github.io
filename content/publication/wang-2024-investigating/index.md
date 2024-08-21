@@ -1,6 +1,5 @@
 ---
-title: Investigating the properties of neural network representations in reinforcement
-  learning
+title: Investigating the properties of neural network representations in reinforcement learning
 authors:
 - Han Wang
 - Erfan Miahi
