@@ -50,9 +50,9 @@ education:
     date_start: 2019-09-01
     date_end: 2023-12-30
     summary: |
-      Research on offline reinforcement learning
+      Research on offline reinforcement learning.
     button:
-      text: 'Read Thesis'
+      text: 'PhD Thesis'
       url: 'https://era.library.ualberta.ca/items/82e3495b-3120-452f-9ef5-eb0a1697e504'
   - area: MSc in Statistical Machine Learning
     institution: University of Alberta
@@ -62,19 +62,26 @@ education:
       GPA: 4.0/4.0
 
       Courses included:
+      - Reinforcement Learning Theory
       - Bandit Algorithms
       - Differential Privacy
       - Statistical Inference
       - Regression Analysis
     button:
-      text: 'Read Thesis'
+      text: 'MSc Thesis'
       url: 'https://era.library.ualberta.ca/items/b4cd1257-69ae-4349-9de6-3feed2648eb1'
-  - area: BBA in Operations Management 
+  - area: Bachelor of Business Administration
     institution: National Taiwan University
     date_start: 2012-09-01
     date_end: 2017-01-31
     summary: |
       GPA: 4.0/4.3
+
+      Courses included:
+      - Machine Learning Foundations
+      - Econometrics
+      - Optimization 
+      - Financial Engineering
 work:
   - position: Postdoctoral Research and Teaching Fellow
     company_name: University of British Columbia
@@ -83,8 +90,7 @@ work:
     date_start: 2024-03-01
     date_end: ''
     summary: |2-
-      Responsibilities include:
-      - Teach machine learning and statistics courses in the Master of Data Science program
+      - Teach machine learning and statistics courses for the Master of Data Science program
       - Supervise students on industrial projects
 
 # Skills
@@ -99,7 +105,7 @@ skills:
       - name: R
         description: ''
         percent: 100
-        icon: chart-bar
+        icon: rstudio
   - name: Hobbies
     color: '#eeac02'
     color_border: '#f0bf23'
@@ -137,4 +143,4 @@ awards:
 
 ## About Me
 
-I am a postdoc at UBC. 
+I am currently a postdoc at UBC. Before that, I completed my PhD and MSc in Computing Science at the [RLAI Lab](http://rlai.ualberta.ca/) at the University of Alberta, advised by Professor [Martha White](http://webdocs.cs.ualberta.ca/~whitem/). I am interested in sequential decision making in real world problems.
