@@ -126,7 +126,7 @@ skills:
 awards:
   - title: Borealis AI Fellowship
     # url: https://www.coursera.org/learn/neural-networks-deep-learning
-    date: '2021'
+    date: '2021-09-01'
     # awarder: Coursera
     # icon: coursera
     # summary: |
