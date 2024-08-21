@@ -66,7 +66,8 @@ sections:
   - block: markdown
     content:
       title: Teaching
-      text: Instructor, University of British Columbia
+      text: |-
+      Instructor, University of British Columbia
         <ul>
           <li>DSCI 512 Algorithms and Data Structures, Fall 2024</li>
           <li>DSCI 551 Descriptive Statistics and Probability for Data Science, Fall 2024</li>
@@ -81,6 +82,8 @@ sections:
           <li>[CMPUT 298 Basic of Machine Learning](https://marthawhite.github.io/mlbasics/), Winter 2020</li>
           <li>CMPUT 175 Introduction to the Foundations of Computation II, Fall 2017 and Winter 2018</li>
         </ul>
+    design:
+      columns: '1'
   # - block: collection
   #   id: talks
   #   content:
