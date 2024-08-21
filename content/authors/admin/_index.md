@@ -22,7 +22,7 @@ role: Postdoctoral Research and Teaching Fellow
 # Organizations/Affiliations to display in Biography blox
 organizations:
   - name: The University of British Columbia
-    url: https://masterdatascience.ubc.ca/programs/vancouver
+    # url: https://masterdatascience.ubc.ca/programs/vancouver
 
 # Social network links
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
@@ -30,14 +30,14 @@ profiles:
   - icon: at-symbol
     url: 'mailto:liucc.vincent@gmail.com'
     label: E-mail
-  - icon: brands/x
-    url: https://twitter.com/vl_dimension
+  - icon: brands/linkedin
+    url: https://www.linkedin.com/in/vliu3
   - icon: brands/github
     url: https://github.com/vincentliu3
-  - icon: brands/linkedin
-    url: https://www.linkedin.com/vliu3
+  # - icon: brands/x
+  #   url: https://twitter.com/vl_dimension
   - icon: academicons/google-scholar
-    url: ttps://scholar.google.com/citations?hl=en&user=0BWc_FwAAAAJ&view_op=list_works&sortby=pubdate
+    url: https://scholar.google.com/citations?hl=en&user=0BWc_FwAAAAJ&view_op=list_works&sortby=pubdate
 
 interests:
   - Reinforcement Learning
@@ -47,8 +47,8 @@ interests:
 education:
   - area: PhD in Statistical Machine Learning
     institution: University of Alberta
-    date_start: 2019
-    date_end: 2023
+    date_start: 2019-09-01
+    date_end: 2023-12-30
     summary: |
       Thesis on _Why LLMs are awesome_. Supervised by [Prof Joe Smith](https://example.com). Presented papers at 5 IEEE conferences with the contributions being published in 2 Springer journals.
     button:
