@@ -6,8 +6,8 @@ authors:
 - Yash Chandak
 - Philip Thomas
 - Martha White
-date: '2023-01-01'
-publishDate: '2024-08-21T01:36:10.989798Z'
+date: '2023-01-02'
+publishDate: '2024-08-22T01:36:10.989798Z'
 publication_types:
 - paper-conference
 publication: '*International Conference on Artificial Intelligence and Statistics*'

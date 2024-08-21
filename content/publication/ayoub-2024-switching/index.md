@@ -9,8 +9,8 @@ authors:
 - Dawen Liang
 - Nathan Kallus
 - Csaba Szepesvári
-date: '2024-01-01'
-publishDate: '2024-08-21T04:11:40.747075Z'
+date: '2024-01-02'
+publishDate: '2024-08-22T04:11:40.747075Z'
 publication_types:
 - paper-conference
 publication: '*International Conference on Machine Learning*'
