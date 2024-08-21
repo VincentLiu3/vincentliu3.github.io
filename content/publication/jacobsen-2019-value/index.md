@@ -6,8 +6,8 @@ authors:
 - Roshan Shariff
 - Adam White
 - Martha White 
-date: '2019-01-01'
-publishDate: '2024-08-21T01:36:11.022187Z'
+date: '2019-01-03'
+publishDate: '2024-01-03T01:36:11.022187Z'
 publication_types:
 - paper-conference
 publication: '*The Multi-disciplinary Conference on Reinforcement Learning and Decision

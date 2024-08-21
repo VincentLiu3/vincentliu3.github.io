@@ -9,7 +9,7 @@ authors:
 - Mi-Yen Yeh
 - Shou-De Lin
 date: '2019-01-01'
-publishDate: '2024-08-21T01:36:11.034081Z'
+publishDate: '2024-01-01T01:36:11.034081Z'
 publication_types:
 - article-journal
 publication: '*Frontiers in big Data*'

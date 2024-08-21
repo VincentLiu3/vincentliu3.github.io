@@ -8,7 +8,7 @@ authors:
 - White Adam
 - Martha White
 date: '2023-01-01'
-publishDate: '2024-08-21T01:36:10.977154Z'
+publishDate: '2024-01-01T01:36:10.977154Z'
 publication_types:
 - paper-conference
 publication: '*Conference on Lifelong Learning Agents*'
