@@ -49,8 +49,8 @@ education:
     institution: University of Alberta
     date_start: 2019-09-01
     date_end: 2023-12-30
-    # summary: |
-    #   Thesis on _Why LLMs are awesome_. Supervised by [Prof Joe Smith](https://example.com). Presented papers at 5 IEEE conferences with the contributions being published in 2 Springer journals.
+    summary: |
+      123
     button:
       text: 'Read Thesis'
       url: 'https://era.library.ualberta.ca/items/82e3495b-3120-452f-9ef5-eb0a1697e504'
