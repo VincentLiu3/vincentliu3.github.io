@@ -105,7 +105,7 @@ skills:
       - name: R
         description: ''
         percent: 100
-        icon: rstudio
+        icon: chart-bar
   - name: Hobbies
     color: '#eeac02'
     color_border: '#f0bf23'
