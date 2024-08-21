@@ -38,6 +38,7 @@ sections:
         folders:
           - publication
         exclude_featured: false
+      count: 20
     design:
       view: citation
   - block: markdown
