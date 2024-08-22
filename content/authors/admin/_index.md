@@ -8,7 +8,7 @@ last_name: Liu
 
 # Status emoji
 status:
-  icon: ☕️
+  icon: 
 
 # Is this the primary user of the site?
 superuser: true
@@ -143,4 +143,4 @@ awards:
 
 ## About Me
 
-I am currently a postdoc at UBC. Before that, I completed my PhD and MSc in Computing Science at the [RLAI Lab](http://rlai.ualberta.ca/) at the University of Alberta, advised by Professor [Martha White](http://webdocs.cs.ualberta.ca/~whitem/). I am interested in sequential decision making in real world problems.
+I am a postdoc at UBC. I completed my PhD and MSc in Computing Science at the [RLAI Lab](http://rlai.ualberta.ca/) at the University of Alberta, advised by Professor [Martha White](http://webdocs.cs.ualberta.ca/~whitem/). My primary research focus is on offline reinforcement learning. I am broadly interested in applying machine learning and reinforcement learning to solve real-world decision-making problems.
