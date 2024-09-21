@@ -37,7 +37,7 @@ profiles:
   # - icon: brands/x
   #   url: https://twitter.com/vl_dimension
   - icon: academicons/google-scholar
-    url: https://scholar.google.com/citations?hl=en&user=0BWc_FwAAAAJ&view_op=list_works&sortby=pubdate
+    url: https://scholar.google.ca/citations?hl=en&user=ctpnOI4AAAAJ&view_op=list_works&sortby=pubdate
 
 interests:
   - Reinforcement Learning
