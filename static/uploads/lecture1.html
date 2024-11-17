@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="lecture1_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lecture1_files/libs/quarto-html/tabby.min.js"></script>
+<script src="lecture1_files/libs/quarto-html/popper.min.js"></script>
+<script src="lecture1_files/libs/quarto-html/tippy.umd.min.js"></script>
+<link href="lecture1_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lecture1_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="lecture1_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="lecture1_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.57">
+
+  <meta name="author" content="Vincent Liu">
+  <title>Lecture 1: Classification metrics</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="lecture1_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="lecture1_files/libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="lecture1_files/libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="styles.css">
+  <link href="lecture1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="lecture1_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="lecture1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="lecture1_files/libs/revealjs/plugin/reveal-chalkboard/font-awesome/css/all.css" rel="stylesheet">
+  <link href="lecture1_files/libs/revealjs/plugin/reveal-chalkboard/style.css" rel="stylesheet">
+  <link href="lecture1_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+  
+  <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" class="quarto-title-block center">
+  <h1 class="title">Lecture 1: Classification metrics</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Vincent Liu 
+</div>
+</div>
+</div>
+
+</section>
+<section>
+<section id="section" class="title-slide slide level2 center">
+<h2></h2>
+<p><img data-src="ml-workflow.png" width="1000"></p>
+<aside class="notes">
+<ul>
+<li>Here is a typical workflow of a supervised machine learning systems.</li>
+<li>In DSCI 571, we talked about data splitting, preprocessing, some EDA, model selection with hyperparameter optimization, and interpretation in the context of linear models.</li>
+<li>In DSCI 573, we will talk about, evaluation metrics and model selection in terms of evaluation metrics, feature engineering, feature selection, and model transparency and interpretation.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="lecture-overview" class="slide level4">
+<h4>Lecture overview</h4>
+<ul>
+<li>Week 1: Evaluation metrics</li>
+<li>Week 2: Feature engineering &amp; feature selection</li>
+<li>Week 3: Regularization</li>
+<li>Week 4: Ensemble &amp; model interpretability</li>
+</ul>
+</section>
+<section id="iclicker" class="slide level4">
+<h4>iclicker</h4>
+<ul>
+<li>https://join.iclicker.com/GPNI</li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure>
+<p><img data-src="iclicker.png" class="quarto-figure quarto-figure-center"></p>
+</figure>
+</div>
+</section>
+<section id="regression-and-binary-classification-review" class="slide level4">
+<h4>Regression and binary classification review</h4>
+<aside class="notes">
+<ul>
+<li>Two kinds of binary classification problems
+<ul>
+<li>Distinguishing between two classes (e.g., dogs vs.&nbsp;cats)</li>
+<li>Spotting a class (e.g., spot fraud transaction, spot spam)</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="evaluation-metrics-for-binary-classification" class="title-slide slide level2 center">
+<h2>Evaluation metrics for binary classification</h2>
+
+</section>
+<section id="case-study-credit-card-fraud-dataset" class="slide level4">
+<h4>Case study: credit card fraud dataset</h4>
+<div id="acf73f1a" class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display">
+<table id="itables_c86bcbf3_b4eb_40fb_adbd_b4cd9f1c21b3" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Class</th>
+      <th>Time</th>
+      <th>Amount</th>
+      <th>V1</th>
+      <th>V2</th>
+      <th>V3</th>
+      <th>V4</th>
+      <th>V5</th>
+      <th>V6</th>
+      <th>V7</th>
+      <th>V8</th>
+      <th>V9</th>
+      <th>V10</th>
+      <th>V11</th>
+      <th>V12</th>
+      <th>V13</th>
+      <th>V14</th>
+      <th>V15</th>
+      <th>V16</th>
+      <th>V17</th>
+      <th>V18</th>
+      <th>V19</th>
+      <th>V20</th>
+      <th>V21</th>
+      <th>V22</th>
+      <th>V23</th>
+      <th>V24</th>
+      <th>V25</th>
+      <th>V26</th>
+      <th>V27</th>
+      <th>V28</th>
+    </tr>
+  </thead><tbody><tr>
+<td style="vertical-align:middle; text-align:left">
+<div style="float:left; margin-right: 10px;">
+<a href="https://mwouts.github.io/itables/"><svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" width="64" viewbox="0 0 500 400" style="font-family: 'Droid Sans', sans-serif;">
+    <g style="fill:#d9d7fc">
+        <path d="M100,400H500V357H100Z"></path>
+        <path d="M100,300H400V257H100Z"></path>
+        <path d="M0,200H400V157H0Z"></path>
+        <path d="M100,100H500V57H100Z"></path>
+        <path d="M100,350H500V307H100Z"></path>
+        <path d="M100,250H400V207H100Z"></path>
+        <path d="M0,150H400V107H0Z"></path>
+        <path d="M100,50H500V7H100Z"></path>
+    </g>
+    <g style="fill:#1a1366;stroke:#1a1366;">
+   <rect x="100" y="7" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="5s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="0" y="107" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="3.5s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="0;0;400" dur="3.5s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="207" width="300" height="43">
+    <animate attributename="width" values="0;300;0" dur="3s" repeatcount="indefinite"></animate>
+    <animate attributename="x" values="100;100;400" dur="3s" repeatcount="indefinite"></animate>
+  </rect>
+        <rect x="100" y="307" width="400" height="43">
+    <animate attributename="width" values="0;400;0" dur="4s" repeatcount="indefinite"></animate>
+      <animate attributename="x" values="100;100;500" dur="4s" repeatcount="indefinite"></animate>
+  </rect>
+        <g style="fill:transparent;stroke-width:8; stroke-linejoin:round" rx="5">
+            <g transform="translate(45 50) rotate(-45)">
+                <circle r="33" cx="0" cy="0"></circle>
+                <rect x="-8" y="32" width="16" height="30"></rect>
+            </g>
+
+            <g transform="translate(450 152)">
+                <polyline points="-15,-20 -35,-20 -35,40 25,40 25,20"></polyline>
+                <rect x="-15" y="-40" width="60" height="60"></rect>
+            </g>
+
+            <g transform="translate(50 352)">
+                <polygon points="-35,-5 0,-40 35,-5"></polygon>
+                <polygon points="-35,10 0,45 35,10"></polygon>
+            </g>
+
+            <g transform="translate(75 250)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+
+            <g transform="translate(425 250) rotate(180)">
+                <polyline points="-30,30 -60,0 -30,-30"></polyline>
+                <polyline points="0,30 -30,0 0,-30"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
+</a>
+</div>
+<div>
+Loading ITables v2.2.3 from the internet...
+(need <a href="https://mwouts.github.io/itables/troubleshooting.html">help</a>?)</div></td>
+
+</tr></tbody>
+</table>
+<link href="https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.css" rel="stylesheet">
+<script type="module">
+    import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
+
+    document.querySelectorAll("#itables_c86bcbf3_b4eb_40fb_adbd_b4cd9f1c21b3:not(.dataTable)").forEach(table => {
+        if (!(table instanceof HTMLTableElement))
+            return;
+
+        // Define the table data
+        const data = [[64454, "Non fraud", 51150.0, 1.0, -3.538816, 3.481893, -1.82713, -0.57305, 2.644106, -0.340988, 2.102135, -2.939006, 2.578654, 3.155261, 0.469895, -1.170292, 0.342072, -5.854435, 1.090875, 0.530014, 1.516968, 1.014804, -1.509991, 1.345904, 0.530978, -0.860677, -0.20181, -1.719747, 0.729143, -0.547993, -0.023636, -0.454966], [37906, "Non fraud", 39163.0, 18.49, -0.363913, 0.853399, 1.648195, 1.118934, 0.100882, 0.423852, 0.47279, -0.97244, 0.033833, 0.629036, 1.257913, -0.161244, -2.001477, 0.260308, 0.189953, -0.844019, 0.173619, -0.021524, 0.810267, -0.192932, 0.687055, -0.094586, 0.121531, 0.14683, -0.944092, -0.558564, -0.186814, -0.257103], [79378, "Non fraud", 57994.0, 23.74, 1.193021, -0.136714, 0.622612, 0.780864, -0.823511, -0.706444, -0.206073, -0.016918, 0.781531, -0.185059, -0.90432, -0.34181, -1.589398, 0.193059, 0.043635, -0.104751, 0.101689, -0.555039, 0.258815, -0.178761, -0.310405, -0.842028, 0.085477, 0.366005, 0.254443, 0.290002, -0.036764, 0.015039], [245686, "Non fraud", 152859.0, 156.52, 1.604032, -0.808208, -1.594982, 0.200475, 0.502985, 0.83237, -0.034071, 0.23404, 0.550616, -0.051983, 1.253511, 0.986015, -0.417782, 0.737555, 0.711161, -0.916659, 0.130676, -0.776092, -1.009429, -0.040448, 0.519029, 1.429217, -0.139322, -1.293663, 0.037785, 0.061206, 0.005387, -0.057296], [60943, "Non fraud", 49575.0, 57.5, -2.669614, -2.734385, 0.66245, -0.059077, 3.34685, -2.549682, -1.430571, -0.11845, 0.469383, -0.185599, -1.309417, 0.704059, 1.245003, -0.334923, -0.333972, 0.342296, -0.717449, -0.590856, 0.157993, -0.430295, -0.228329, -0.370643, -0.211544, -0.300837, -1.17459, 0.573818, 0.388023, 0.161782], [191461, "Non fraud", 129266.0, 129.03, 1.991714, -1.153403, -1.663474, -1.100949, -0.264511, -0.318587, -0.360515, -0.093197, -0.610765, 0.939166, 0.472147, -0.434937, -0.677256, 0.345033, -0.440403, 1.314713, -0.170427, -1.007064, 1.219895, 0.19619, 0.012507, -0.368755, 0.162826, 0.157511, -0.222597, -0.456767, -0.070851, -0.046526], [139597, "Non fraud", 83244.0, 47.18, -0.243676, 0.816755, 1.45923, 0.525257, 0.237212, -0.77561, 1.182072, -0.390459, -0.463845, -0.239917, -0.42976, -0.1315, 0.066003, 0.041141, 0.724614, -0.123651, -0.526953, -0.01637, -0.238153, 0.093852, 0.077984, 0.326372, -0.179087, 0.389977, 0.247482, -0.398912, -0.13932, -0.1929], [209266, "Non fraud", 137486.0, 17.59, -0.573211, 1.448889, 0.627556, 4.246033, 0.839816, 1.408511, -0.090972, 0.634313, -2.340017, 1.500647, 0.11855, 0.477919, 1.256312, 0.426825, -0.186028, 0.178463, -0.136752, 0.760579, 1.48779, 0.118769, 0.332426, 0.900857, -0.210949, 0.273413, -0.70134, 0.367504, 0.042528, 0.059105], [193683, "Non fraud", 130244.0, 15.0, 2.242239, -1.371407, -0.83176, -1.555119, -1.346586, -0.748777, -1.108329, -0.137144, -1.473515, 1.748074, 0.793643, -0.143223, 0.101334, -0.142327, -0.862493, -0.511061, 0.374067, 0.245031, 0.053795, -0.457989, -0.107764, 0.182882, 0.236749, -0.003977, -0.231004, -0.179814, 0.007172, -0.061598], [270196, "Non fraud", 163957.0, 1.0, -3.212955, -0.370758, -2.248116, 0.412041, 1.306728, -1.929139, -0.356911, 0.757961, -0.11614, -0.97102, -1.302521, 0.411001, 1.238966, -0.463529, 0.794941, 0.765357, 0.584686, 0.92661, 0.361195, -1.66529, -0.125433, 1.202939, 1.702449, -0.69353, 0.368574, 0.004554, 0.36077, -0.460067], [123988, "Non fraud", 77140.0, 1.29, 1.203175, 0.129775, 0.598015, 0.562994, -0.616485, -0.810597, -0.109369, -0.011151, -0.067817, 0.13427, 1.484531, 0.560651, -0.867318, 0.659361, 0.432886, 0.489355, -0.538797, 0.016532, 0.100905, -0.157864, -0.204818, -0.68101, 0.162483, 0.501255, 0.12433, 0.068077, -0.039454, 0.008546], [44590, "Non fraud", 42010.0, 29.09, 1.101072, 0.099279, 0.507688, 1.4954, -0.394915, -0.384315, 0.05551, -0.002878, 0.373768, -0.11383, -0.364671, 0.261571, -0.894845, 0.231586, -0.038189, -0.782908, 0.423996, -0.994143, -0.492885, -0.204728, -0.075846, -0.064223, -0.031957, 0.389901, 0.587655, -0.332264, 0.031848, 0.021303], [241514, "Non fraud", 151057.0, 36.99, -0.494796, 2.108905, -1.700865, 1.291648, -0.038503, 0.372098, -2.327889, -8.224103, -1.82928, -1.148976, 1.255067, 1.892459, -0.434756, 2.30185, -0.60373, -0.291525, 0.173102, 0.007742, -0.20106, 1.758555, -3.464586, 2.201206, 0.412263, 0.475305, -0.12527, -0.522186, 0.198236, 0.438238], [17847, "Non fraud", 28973.0, 15.17, -3.895205, 0.732844, 1.622745, -0.944723, 0.205383, 0.632825, -3.765557, -7.906405, 0.958635, -0.438999, 0.7496, 1.057209, -1.424013, 0.017688, -0.996109, 0.79411, -0.35409, 0.180643, -0.383011, -0.09439, -0.501745, -0.023793, -0.550701, 0.386337, -0.604734, 0.687454, -0.794632, 0.107647], [149276, "Non fraud", 90925.0, 357.3, 1.307834, -1.489304, -0.805145, 0.643228, -0.84711, -0.07064, -0.331246, -0.031993, 2.610051, -0.524733, 1.179684, -2.263396, 0.452034, 1.973638, -0.139289, 0.575361, -0.270039, 1.537201, -0.168749, 0.377012, 0.293926, 0.394678, -0.228968, -0.572081, -0.229938, -0.623401, -0.047405, 0.004339], [283746, "Non fraud", 171842.0, 166.63, -0.495003, 0.089594, 0.636603, 0.885895, 0.72049, 1.502308, 0.778287, 0.323435, -0.116344, -0.443555, -0.561029, 0.8207, 0.350027, -0.2057, -1.584064, -0.419129, -0.350492, 0.216151, 1.801494, 0.422568, -0.311114, -0.998476, 0.452454, -0.436799, -0.614956, -0.999411, 0.198757, 0.216259], [110347, "Non fraud", 71781.0, 17.99, -0.499774, 0.967845, 0.885015, -0.415328, 0.713983, 0.394437, 0.614803, 0.13319, -0.188204, -0.242693, -1.475015, -0.601598, -0.061176, 0.114504, 1.248564, 0.32273, -0.613827, -0.311917, 0.187329, 0.072467, -0.280638, -0.76646, -0.154169, -1.355683, -0.102729, 0.176254, 0.151837, 0.094952], [58765, "Non fraud", 48536.0, 6.27, -0.524155, 0.969818, 1.757842, 0.054664, -0.116701, -0.749096, 0.629315, 0.037282, -0.441272, -0.3581, 0.305879, 0.238421, -0.032593, 0.194885, 1.057363, -0.251675, 0.076436, -0.978473, -0.546086, 0.067875, -0.159833, -0.380727, 0.087796, 0.587959, -0.333353, 0.067657, 0.280308, 0.124053], [221754, "Non fraud", 142689.0, 2.18, 0.045912, 0.885742, 0.303237, -0.585817, 0.42315, -1.126924, 1.024231, -0.220081, -0.077083, -0.416393, -0.882166, 0.254717, 0.222704, 0.070064, -0.427562, -0.106095, -0.417531, -0.778066, -0.088482, -0.027645, -0.258128, -0.552055, 0.065737, 0.045391, -0.483637, 0.13705, 0.248959, 0.09788], [242836, "Non fraud", 151677.0, 0.89, 2.060655, 0.096768, -1.842265, 0.21172, 0.655904, -0.339268, 0.06991, -0.061946, 0.268136, -0.206882, 0.780746, 0.682695, -0.003456, -0.661007, -0.461956, 0.626441, 0.086715, 0.318226, 0.486964, -0.13747, -0.339135, -0.906145, 0.281519, 0.098256, -0.238615, 0.178137, -0.067177, -0.044762], [141995, "Non fraud", 84546.0, 1.0, 1.245535, -0.51368, 0.861128, -0.70414, -1.410905, -0.876413, -0.727192, 0.096458, 2.166594, -1.012936, -0.831329, -0.471786, -2.317684, 0.304184, 1.522411, -0.334191, -0.016559, 0.468793, 0.573293, -0.271507, -0.038864, 0.026838, -0.008963, 0.341611, 0.423813, -0.678627, 0.078753, 0.030352], [93734, "Non fraud", 64562.0, 12.0, 1.400462, -1.562772, 0.69866, -1.180767, -1.736469, 0.53485, -1.679132, 0.415379, -0.82901, 1.389218, 0.021707, -1.258903, -2.463441, -0.291245, -1.465211, -1.008728, 1.211128, 0.154993, 0.359094, -0.54888, -0.264212, -0.177799, -0.024254, -0.365318, 0.378193, -0.048058, 0.059851, -0.002401], [26325, "Non fraud", 34009.0, 25.0, 1.54382, -1.290131, -1.179934, -2.372187, 0.989026, 3.358062, -1.443413, 0.766542, -1.810196, 1.408913, -0.454054, -0.880739, 0.355191, -0.326949, -0.046941, -0.446615, 0.298765, 0.097211, 0.424294, -0.197669, -0.396657, -0.829234, 0.005464, 0.982294, 0.584468, -0.238287, 0.032118, 0.013673], [67505, "Non fraud", 52566.0, 0.89, 1.30875, 0.232696, -0.242408, 0.268279, 0.290754, 0.002904, -0.081721, 0.059021, -0.05565, -0.095934, 0.348371, 0.202211, -0.152995, -0.066147, 0.548929, 1.088966, -0.711246, 0.696368, 0.598171, -0.062059, -0.3303, -1.00609, -0.041007, -1.059781, 0.346634, 0.161612, -0.031923, 0.005816], [27968, "Non fraud", 34788.0, 5.0, 1.164007, 0.259406, 0.416629, 0.492674, -0.146149, -0.437844, 0.119992, -0.001911, -0.427824, 0.042534, 1.985516, 1.400611, 0.360556, 0.549703, 0.368124, 0.017714, -0.249095, -0.953658, -0.068931, -0.106051, -0.402844, -1.199558, 0.295635, 0.190507, -0.01687, -0.128578, -0.026958, 0.00794], [178093, "Non fraud", 123472.0, 12.83, 2.07535, -0.055095, -1.421226, 0.272513, 0.366306, -0.57649, 0.224392, -0.277972, 0.462633, 0.021689, -0.97946, 0.753389, 0.913542, 0.045093, -0.248821, -0.183304, -0.371336, -0.859402, 0.325751, -0.11529, -0.260003, -0.593082, 0.262723, 0.510334, -0.109061, 0.255254, -0.074965, -0.055808], [208291, "Non fraud", 137051.0, 10.0, 2.247647, -1.561524, -0.269987, -1.673449, -1.633407, -0.103505, -1.695202, 0.094488, -0.998629, 1.685968, 0.247562, -0.257156, 0.384039, -0.528847, -0.482736, 0.20362, -0.092558, 0.737165, 0.205885, -0.422483, -0.252388, -0.249405, 0.344679, -0.549801, -0.557145, -0.357197, 0.046299, -0.048177], [262981, "Non fraud", 160742.0, 20.95, -3.096145, 2.425792, -1.776935, -0.641617, -1.328877, -0.567123, -1.185411, 2.45631, -1.054924, -1.396087, -0.477125, 0.67496, -1.61864, 2.423821, -1.245901, 0.67773, 0.575457, 0.202323, 0.43931, -0.936735, 0.181984, -0.626712, 0.137131, 0.731559, -0.129328, 0.172006, -1.39188, -0.300753], [278988, "Non fraud", 168571.0, 0.89, -0.275372, 1.131507, 0.513849, 0.464412, 1.094142, 0.724936, 0.674748, -0.018386, -1.089344, 0.078496, 0.49207, 0.368616, 0.853441, 0.552546, 1.531847, -0.968429, -0.021188, 1.088211, 3.183362, 0.355512, 0.280796, 0.903766, -0.655463, -0.116724, 0.791923, 0.455399, -0.046958, 0.057962], [177765, "Non fraud", 123333.0, 859.21, -0.728027, -2.70697, -4.716186, -2.284347, 2.071207, 3.224178, 0.347701, -2.454992, -1.728712, -0.452663, -0.322273, -0.427679, -0.485787, 1.285423, -1.006337, 0.577883, 0.158457, -1.723152, -0.907833, 2.239613, -0.121613, 1.683021, -0.751527, 0.83061, -0.375777, -0.123086, 0.085238, 0.559113], [40196, "Non fraud", 40132.0, 120.0, 0.91849, -0.181451, 0.34476, 1.17798, -0.317241, -0.027651, 0.005715, 0.117368, -0.145139, 0.149194, 1.386328, 0.575737, -0.755173, 0.695936, 0.620521, 0.155267, -0.419887, 0.082326, -0.574036, 0.02831, 0.175065, 0.247383, -0.151166, -0.000389, 0.440111, -0.326337, 0.008257, 0.029316], [51299, "Non fraud", 44881.0, 316.0, 0.699332, -1.637593, 0.281665, -0.944708, -1.250523, 0.058102, -0.309941, -0.04886, 2.314722, -1.513629, -1.472681, 1.27424, 1.001458, -0.842516, -0.259889, -0.88273, 0.129339, 0.02591, 1.383795, 0.610817, 0.139425, 0.245646, -0.543986, -0.29968, 0.673568, 0.186228, 0.005332, 0.0668], [190330, "Non fraud", 128789.0, 2.99, 0.034379, 0.748816, 0.099673, -0.805547, 0.630032, -0.546821, 0.847453, 0.012797, -0.157539, -0.219087, 0.218048, 0.269578, -0.742605, 0.429887, -0.986503, 0.277203, -0.789435, -0.005629, 0.390145, -0.060677, -0.248853, -0.608108, 0.007047, -0.520134, -0.481325, 0.152872, 0.237872, 0.080791], [60851, "Non fraud", 49533.0, 7.07, -1.013012, 0.602574, 1.039983, -3.534282, -0.399613, -1.568221, 0.615348, 0.240676, 1.187496, -2.857253, 0.151383, 1.787906, 0.69812, 0.173943, 0.039021, -1.103007, 0.139959, -1.00203, -0.772303, -0.355274, 0.03253, 0.180122, -0.089058, 0.625754, 0.163242, -1.250527, 0.030078, 0.058051], [10568, "Fraud", 17520.0, 1.0, -5.268053, 9.067613, -15.960728, 10.296603, -4.708241, -3.395375, -11.161057, 5.499963, -5.667376, -11.627194, 11.027059, -16.388054, 0.363921, -17.230202, -0.437488, -10.122392, -13.639209, -4.986457, 1.126784, 1.455878, 2.00411, 0.191058, 0.622928, -1.209264, -0.374799, 0.648798, 1.584697, 0.720056], [32317, "Non fraud", 36744.0, 1.95, 1.136784, 0.122534, 0.367139, 0.416568, 0.024423, 0.233753, -0.122006, 0.186742, -0.269784, 0.020015, 1.918122, 1.256438, 0.230746, 0.506264, 0.722448, -0.196598, -0.067934, -0.958927, -0.542686, -0.145281, -0.093967, -0.216587, 0.126989, -0.276578, 0.14606, 0.214782, -0.004663, -0.001498], [250992, "Non fraud", 155158.0, 64.99, 1.925796, -0.589433, -0.557089, 0.357324, -0.449488, -0.048236, -0.550647, -0.049584, 1.179392, -0.050135, -1.463592, 0.590186, 1.144469, -0.459952, 0.361509, 0.445691, -0.748407, 0.057005, -0.076984, -0.006546, 0.160802, 0.617181, 0.018353, -0.690443, -0.186266, 0.609984, -0.021702, -0.043453], [53445, "Non fraud", 45980.0, 1368.0, -1.301598, -4.397578, -1.689542, 1.234119, -1.635399, -0.376418, 1.897541, -0.528407, 0.328515, -0.77978, -1.161343, -0.549717, -1.136741, 0.715305, 0.461185, 0.093718, -0.006489, -0.145504, 0.059551, 2.60874, 0.68981, -1.030492, -1.333046, 0.009262, 0.065541, 0.98062, -0.361264, 0.222319], [220744, "Non fraud", 142288.0, 6.39, 1.981215, -0.386876, -0.07137, 0.33379, -0.636118, 0.000875, -0.824039, 0.072276, 1.419564, -0.207336, -0.847818, 0.902803, 1.179913, -0.468405, 0.861173, 0.443732, -0.799251, 0.225736, -0.275749, -0.121745, 0.074669, 0.420665, 0.279441, 0.675753, -0.321314, -0.441505, 0.059477, -0.018016], [265491, "Non fraud", 161907.0, 252.7, 1.652675, -1.785785, -0.832772, -0.713961, -1.155515, -0.053199, -0.726162, 0.068708, -0.040164, 0.715823, 0.736899, 0.048474, -0.628102, -0.142317, -1.020096, 1.19252, 0.166765, -1.207776, 1.128008, 0.435714, -0.02524, -0.64987, 0.249245, 0.720812, -0.608727, -0.652038, -0.049939, -0.005135], [198076, "Non fraud", 132318.0, 67.7, -0.151743, 0.814365, -0.222152, -0.214175, 0.744205, -1.094827, 1.490799, -0.564491, 0.050986, -0.753922, -0.569601, -0.725034, -0.613977, -0.907108, 0.839153, -0.099411, 0.399173, 0.708625, -0.116847, -0.078643, 0.284188, 1.109078, -0.139382, -0.156364, -0.510598, -0.188068, -0.030249, -0.002385], [727, "Non fraud", 549.0, 530.85, 0.033854, -1.818313, 1.077334, 3.350537, -1.292195, 1.54608, -0.28252, 0.402055, 0.928263, -0.011706, -1.801164, 0.092265, -0.871234, -0.75744, -1.720001, -0.20421, 0.428464, -0.689307, -0.67738, 0.809245, 0.108768, -0.451008, -0.475113, -0.261082, 0.181753, 0.025919, -0.019035, 0.117564], [191035, "Non fraud", 129081.0, 50.0, 2.223169, -1.497945, -1.258371, -1.76803, -0.844794, -0.002427, -1.122988, -0.021936, -1.471018, 1.72158, 0.311997, -0.299808, 0.341286, -0.205179, -0.787039, -0.326372, 0.147075, 0.450773, 0.257947, -0.330918, -0.126644, 0.017295, 0.173393, 0.202417, -0.148752, -0.184561, -0.004365, -0.053698], [54694, "Non fraud", 46569.0, 1.79, 1.159587, 0.129931, 0.583593, 0.506725, -0.36819, -0.323532, -0.139543, 0.088022, -0.176418, 0.069579, 1.823576, 1.01401, -0.194556, 0.549988, 0.608928, 0.164577, -0.300093, -0.517143, -0.26219, -0.144228, -0.168948, -0.510228, 0.183213, 0.20879, 0.074788, 0.09542, -0.018539, 0.006705], [255961, "Non fraud", 157480.0, 0.89, 2.117225, -0.046835, -1.372745, 0.236322, 0.248742, -0.777152, 0.186657, -0.302699, 0.550313, 0.066507, -1.365469, 0.340958, 0.478695, 0.173762, 0.063824, 0.100719, -0.577661, -0.659202, 0.427939, -0.183746, -0.336005, -0.813919, 0.244653, -0.708093, -0.188111, 0.241718, -0.069697, -0.067113], [26953, "Non fraud", 34318.0, 66.91, -1.060534, 0.626292, 1.241332, 1.387609, 0.28521, -0.075632, 0.603645, 0.100111, -0.074631, 0.203876, -0.592711, 0.166194, -0.137947, -0.050772, 0.270973, -1.212463, 0.611401, -0.677633, 0.706638, 0.29294, -0.068973, 0.241554, 0.068595, 0.094361, 0.017718, -0.212403, 0.547083, 0.310014], [103441, "Non fraud", 68656.0, 75.66, -0.566254, 0.757441, 2.791885, 2.757428, -0.77588, 0.830093, -0.126556, 0.373871, -0.736411, 0.516094, -1.372743, -1.703804, -1.384498, 0.12229, 2.126391, 0.797591, -0.352032, 1.249727, 0.615485, 0.2462, 0.285295, 0.632028, -0.159487, -0.153602, -0.016524, 0.429848, 0.096515, 0.101947], [70526, "Non fraud", 53908.0, 189.47, 0.829673, -0.04748, -0.088265, 1.448586, -0.135203, -0.918577, 0.795891, -0.343782, -0.532641, -0.055419, 0.469326, 0.911382, 0.763102, 0.495181, 0.785917, -0.638239, 0.102432, -1.066916, -0.932247, 0.230545, 0.188347, 0.242068, -0.223569, 0.646141, 0.661324, -0.306175, -0.022102, 0.047475], [177172, "Non fraud", 123070.0, 15.5, -1.10463, -0.272556, 1.167647, -0.416196, 0.939153, -0.305105, 0.318047, -0.300763, 1.019469, -0.414424, -0.560214, -0.317306, 0.504147, -2.377078, 0.681122, 0.990807, -0.106622, 0.690541, -0.490156, -0.057543, -0.269789, 0.086276, 0.566927, 0.481957, -0.208541, 0.289242, -0.161083, -0.34816], [195780, "Non fraud", 131215.0, 24.99, -0.281652, -0.536055, 0.984053, -1.538609, 0.100617, -0.229619, 0.055414, -0.146897, -0.713019, 0.641668, 0.070816, 0.173134, 0.215011, -0.340562, -0.807075, -0.851173, -0.933982, 1.643028, -0.506996, -0.513532, -0.499595, -0.763122, 0.50653, -0.555044, -1.592738, 0.0287, -0.040515, 0.021846], [59720, "Non fraud", 48971.0, 135.0, 1.03486, -0.213319, -0.1547, -0.020146, -0.181435, -0.740063, 0.423181, -0.219584, -0.421427, -0.045648, 1.367476, 1.210693, 0.691984, 0.496637, 0.117592, 0.396141, -0.608704, -0.462037, 0.649851, 0.250745, -0.329108, -1.293732, 0.034858, 0.043144, 0.090695, 0.609391, -0.125045, 0.013909], [234358, "Non fraud", 147941.0, 273.99, 1.395936, -1.338106, -1.638983, 0.066545, 0.324173, 1.14076, -0.003052, 0.295086, 0.926949, -0.280116, 0.719163, 1.003748, -0.666104, 0.516389, -0.07631, -0.942014, 0.287888, -1.171406, -0.267672, 0.203107, 0.081206, -0.070575, -0.020984, -1.619183, -0.343631, -0.003374, -0.033955, -0.037534], [91003, "Non fraud", 63269.0, 60.0, 1.177763, -1.053631, 1.226231, -0.270816, -1.690349, -0.047388, -1.166392, 0.193985, 0.202816, 0.333072, -0.407184, -0.395691, -0.681725, -0.72433, -0.372486, 0.38912, 1.127687, -2.006466, 0.421721, 0.065789, 0.073938, 0.276908, 0.040609, 0.426806, 0.226326, -0.238261, 0.057085, 0.032547], [198216, "Non fraud", 132384.0, 172.86, 1.680333, -0.550699, -1.965872, 0.425748, 0.074247, -0.666085, 0.164657, -0.084855, 0.903354, -0.783246, 0.800469, 0.393491, -1.035661, -1.198234, -0.623091, 0.340642, 0.910257, 0.752966, 0.423876, 0.11018, -0.134356, -0.558891, -0.003729, -0.609933, -0.146194, -0.092604, -0.042682, -0.006321], [64640, "Non fraud", 51241.0, 8.99, -2.044373, 2.281293, -0.078147, -0.395879, -0.155894, -0.676709, 0.270135, 0.473542, 0.67145, 1.123614, -0.997498, -0.225153, 0.16761, -0.555082, 1.033769, 0.639826, -0.174918, 0.094538, 0.042336, 0.769653, -0.468493, -1.006002, -0.011552, -0.533186, 0.279891, 0.153314, 0.731861, 0.450812], [117289, "Non fraud", 74619.0, 45.0, 1.000309, -0.216787, 1.23282, 1.184688, -0.946043, 0.222399, -0.745688, 0.383747, 0.422287, 0.155355, 1.392688, 0.214942, -1.486078, 0.513983, 1.114676, 0.597354, -0.518904, 0.505898, -0.85029, -0.164026, 0.201826, 0.454439, 0.020975, 0.184309, 0.143289, -0.360844, 0.057815, 0.032584], [201066, "Non fraud", 133718.0, 46.35, 0.779225, 0.870525, -0.582531, 2.163393, 0.580028, 0.050457, 0.543813, -1.112082, -0.69742, 0.437211, -0.95075, 0.004232, 0.005837, 0.754369, 0.817257, -1.612859, 0.740088, -0.138398, 2.362741, 0.093133, 0.833845, 0.11612, -0.242208, 0.703335, 0.900192, -0.029777, 0.24877, 0.278022], [220084, "Non fraud", 142016.0, 20.0, -0.938577, 1.566355, -2.036743, -0.233868, 2.963343, 3.553672, 0.461574, 1.23947, -0.594619, 0.414067, -0.476496, 0.043175, -0.401547, 0.860701, 0.054923, -1.136799, 0.200449, -0.389334, 0.642865, 0.23753, 0.070494, 0.465686, -0.152042, 0.710726, 0.213612, -0.342203, 0.56821, 0.279711], [76581, "Non fraud", 56635.0, 33.36, -0.150065, 0.335865, 0.867654, 1.131041, -0.08984, -0.005991, 0.248893, 0.055108, -0.147184, 0.293412, 0.533948, 0.3631, -0.643484, 0.243245, -0.251938, -0.681747, 0.220791, 0.36553, 2.343333, 0.000432, -0.015162, 0.216249, 0.391855, 0.020332, -1.309814, 0.285179, 0.169384, 0.198774], [240896, "Non fraud", 150796.0, 34.33, 0.24499, 0.973202, -1.385196, 0.908315, 1.875834, 0.963116, -0.851974, -2.386428, -0.431815, 0.442954, -0.223277, 0.253806, -0.122138, 1.271102, 2.501933, -2.400043, 1.536593, -1.33053, 1.472335, -0.461605, 2.527541, 0.012915, -1.24081, -0.452527, 0.374702, 0.439658, 0.429746, 0.305381], [64570, "Non fraud", 51204.0, 41.08, -0.303819, 1.66635, 0.183434, 2.859285, 0.275701, -0.113254, 0.688635, 0.312893, -1.794465, 0.806758, -0.413994, 0.218584, 0.869715, 0.722303, 0.874291, -0.613287, 0.460214, -0.614378, 0.382836, 0.163037, 0.237437, 0.760651, 0.210866, 0.112747, -1.025039, 0.125902, 0.374621, 0.248263], [19829, "Non fraud", 30583.0, 20.43, 1.190731, -0.28837, -0.159229, 0.102466, 1.416946, 3.977181, -1.293456, 1.092238, 0.500037, 0.048271, -0.258343, 0.021969, 0.251387, -0.037149, 1.723453, 1.129736, -1.284809, 1.033134, -0.475322, 0.04613, 0.206741, 0.480351, -0.114551, 1.012896, 0.519683, -0.224802, 0.075798, 0.039204], [48494, "Non fraud", 43670.0, 1.0, 1.218656, 0.749431, -0.43783, 1.147167, 0.405216, -0.704164, 0.280209, -0.142739, -0.502377, -0.546032, 1.725839, 1.076747, 1.064034, -1.388334, 0.286693, 0.834491, 0.458607, 1.05378, -0.220024, -0.002576, -0.024378, 0.024257, -0.19041, -0.098652, 0.743755, -0.328354, 0.038522, 0.046466], [37444, "Non fraud", 38957.0, 0.77, 1.360015, -0.105376, -0.026531, -0.24624, -0.37527, -0.726254, -0.163135, -0.081632, 0.581642, -0.135405, -1.274232, -1.022256, -1.550941, 0.543356, 1.393856, 0.584044, -0.505132, -0.004867, 0.399418, -0.161599, -0.186804, -0.598801, -0.034866, -0.444338, 0.292, 1.018934, -0.096263, -0.009101], [258903, "Non fraud", 158874.0, 139.7, -1.233529, 0.324636, 0.508925, -1.9369, -0.613503, -0.891604, 0.840009, -0.013547, -1.83222, -0.357445, -0.873721, -0.728553, 0.701781, 0.050478, 0.026821, 1.04713, 0.201565, -1.09439, 0.408176, 0.017416, 0.486031, 1.222454, -0.341367, 0.055719, 1.096499, 0.196849, -0.18904, -0.082328], [69482, "Non fraud", 53446.0, 12.0, -0.710006, -0.043415, 1.974202, -1.104801, 0.252353, 1.360252, -0.367211, 0.725513, 0.591171, -1.093978, 0.003166, 0.062577, -0.774422, -0.203609, 1.228726, -0.777102, 0.755758, -1.86194, -2.05513, -0.228883, 0.321087, 1.095953, 0.06126, -0.886852, -0.927438, 1.050908, 0.147141, 0.136153], [265246, "Non fraud", 161801.0, 1.0, 1.997285, 0.496255, -2.281595, 1.369771, 1.041196, -0.665216, 0.553936, -0.181947, -0.121798, -0.186642, 1.169227, 0.661648, -0.477936, -0.778377, -1.017747, -0.038695, 0.771127, 0.526466, -0.153123, -0.236172, 0.010056, 0.2109, 0.008412, 0.578108, 0.444902, -0.541028, -0.004307, -0.033333], [28296, "Non fraud", 34939.0, 0.0, -0.453379, 1.016485, 1.7614, 3.248349, -0.691843, 1.683228, -2.157028, -2.659811, 0.177894, 1.057444, -0.084, 0.357285, -1.376276, -0.028212, -1.258375, -0.235221, 0.549818, 0.688228, 1.321619, -0.64518, 3.119621, -0.631228, -0.363001, 0.020882, 0.656408, 0.516406, 0.35431, 0.263544], [246257, "Non fraud", 153099.0, 5.99, -0.359724, 0.769345, 0.504339, 2.35752, 3.026495, 4.801006, -0.415849, 1.302279, -1.567843, 0.957222, -0.583351, -0.54737, -0.089754, 0.092746, 0.214031, 0.767448, -0.717224, -0.168061, -0.697211, 0.075555, -0.068615, -0.397275, 0.219477, 0.623029, -1.019649, -0.263481, 0.231763, 0.21744], [270080, "Non fraud", 163911.0, 1.29, 2.062743, -0.039889, -1.057919, 0.41702, -0.137471, -1.216521, 0.19209, -0.342043, 0.523443, 0.07012, -0.713401, 0.50314, 0.178225, 0.252787, 0.026585, -0.113299, -0.291462, -0.88686, 0.142145, -0.218306, -0.287655, -0.687696, 0.340372, 0.049456, -0.295469, 0.195048, -0.069869, -0.059686], [23340, "Non fraud", 32708.0, 1.99, 1.354918, -0.348834, 0.71764, -0.659837, -0.96024, -0.730958, -0.533728, -0.153115, -1.008614, 0.528497, 0.5664, 0.381232, 1.475955, -0.379959, 0.891929, 0.783598, 0.535712, -2.305079, 0.120334, 0.100028, -0.034781, -0.106701, 0.19497, 0.42349, 0.162631, -0.475979, 0.037288, 0.024399], [233433, "Non fraud", 147564.0, 200.0, 1.602833, -1.384913, -0.4301, -0.497052, -1.023487, 0.071187, -0.607414, 0.085214, 1.726203, -0.54958, 0.505975, 1.855468, 0.799079, -0.47902, -1.053443, -0.0959, -0.335819, -0.131691, 0.978967, 0.265674, -0.098021, -0.352031, 0.138869, -0.323494, -0.577081, 0.387186, -0.047079, -0.025481], [269531, "Non fraud", 163677.0, 1.0, -0.589456, 0.722661, 2.046978, -0.553309, 0.085683, 0.171229, 0.438026, 0.12124, 0.323288, -0.369334, 0.543245, -0.237772, -1.416152, 0.239168, 0.867845, 0.046088, -0.671498, 0.921986, 1.062723, 0.152185, -0.193373, -0.304362, -0.353039, -0.479185, 0.299874, -0.660822, 0.182653, -0.096036], [90472, "Non fraud", 63034.0, 3.57, 1.323515, 0.300144, -0.123823, 0.461389, 0.090347, -0.503612, 0.047303, -0.122795, 0.146664, -0.273223, -1.017531, -0.256589, 0.102752, -0.287825, 1.20067, 0.786392, -0.354028, 0.066371, 0.182439, -0.063711, -0.356155, -1.04079, 0.006944, -0.671098, 0.339637, 0.157651, -0.026689, 0.020281], [192984, "Non fraud", 129944.0, 1.0, 2.084019, 0.208987, -2.145551, 0.907825, 1.307575, 0.198665, 0.489537, -0.139719, -0.083187, 0.408117, -0.121753, 0.925828, 0.410611, 0.540825, -1.161249, -0.240816, -0.809959, 0.138652, 0.466435, -0.206268, 0.029601, 0.288894, -0.106293, -0.338398, 0.606512, -0.478043, -0.019733, -0.075771], [138311, "Non fraud", 82591.0, 3.0, -1.309855, 1.014207, 1.052188, -1.661383, 0.004575, -0.211734, 0.394478, 0.164326, 1.004316, 0.960901, 1.101465, -0.178341, -1.540202, -0.08059, 0.352247, 0.560701, -0.844604, -0.132312, -0.799864, 0.425671, -0.260487, -0.261964, 0.04371, -0.322533, -0.162935, 0.755664, 0.465742, 0.055523], [181199, "Non fraud", 124871.0, 1.0, -0.833881, 0.961597, 0.00752, -0.978873, 0.2916, -1.05984, 0.79763, -0.194481, 0.652757, -0.557715, -1.336559, 0.452879, 0.126882, -0.145991, -1.198542, -0.574925, -0.292449, -0.382658, -0.233327, -0.375437, 0.276652, 0.960786, -0.130621, 0.112969, -0.598742, -0.103976, -0.616245, -0.070109], [203015, "Non fraud", 134606.0, 0.99, 2.020674, 0.141273, -1.595421, 0.341551, 0.414815, -0.655331, 0.109926, -0.121655, 0.167229, -0.219765, 1.359591, 1.087921, 0.305545, -0.70817, -0.548408, 0.441267, 0.270309, 0.082381, 0.269621, -0.129529, -0.296948, -0.767893, 0.346895, 0.679583, -0.300795, 0.141456, -0.063778, -0.038094], [117780, "Non fraud", 74809.0, 25.0, 0.259625, 0.521914, 0.698579, 0.428546, -0.152163, -0.58066, 0.325146, -0.133277, -0.247382, 0.07112, -0.891814, -0.552665, -0.161839, 0.318758, 1.705727, -0.284546, 0.058719, 0.217778, 1.820422, 0.179388, 0.161312, 0.521716, 0.14042, -0.043525, -1.430657, 1.065814, 0.193818, 0.237561], [258869, "Non fraud", 158856.0, 46.07, -3.411277, -1.699279, 0.612318, 0.334444, -0.893066, -0.517296, -0.235027, 0.625258, 0.961093, -0.724023, -1.646027, -0.987103, -1.999378, 0.32059, 0.635271, 0.934611, -0.316354, 0.40226, -0.258386, -1.194935, -0.157542, 0.237402, 0.611046, 0.004036, -0.5377, 0.153682, 0.082037, -1.237254], [198940, "Non fraud", 132722.0, 50.0, -2.561564, 0.648956, -0.974543, -0.287313, 0.638802, -1.423897, 0.966898, -0.527395, 0.647523, -0.044197, -0.574126, -0.513499, -0.329773, -1.217177, 0.848664, 0.309226, 0.32399, 0.649412, -0.407549, -0.709657, 0.120373, 0.609618, -0.998675, -0.135158, 0.295082, -0.27267, -1.909453, -0.518542], [81073, "Non fraud", 58774.0, 2.0, -0.591017, -0.098196, 2.695093, -1.558745, -0.616845, -0.423692, 0.065631, -0.226685, 1.703762, -0.982398, -0.042879, -0.485944, -1.672381, -0.377329, 2.038015, -1.296752, 0.502814, 0.024232, 1.116355, 0.058839, 0.107617, 0.823299, -0.411699, 0.443913, 0.068706, 0.194148, -0.328295, -0.383094], [89087, "Non fraud", 62419.0, 99.0, 1.03528, -0.033239, -0.043893, 1.254678, -0.081813, -0.321941, 0.302176, -0.067445, -0.128099, 0.133263, 0.69061, 0.662649, -0.578857, 0.535325, -0.626546, -0.051022, -0.454419, 0.237392, 0.256175, 0.021057, 0.04781, 0.026339, -0.278661, 0.02476, 0.803223, -0.267033, -0.016004, 0.016053], [162627, "Non fraud", 115257.0, 76.85, 1.827935, -1.391705, -0.666159, -1.15527, -0.25609, 1.718247, -1.31152, 0.616803, -0.161938, 0.661841, 1.582415, 0.515804, 0.065598, -0.122779, 0.648403, 0.311153, 0.942265, -2.817618, -0.515159, -0.019018, 0.140881, 0.388461, 0.396906, -1.780539, -0.818405, -0.35855, 0.066855, -0.057516], [38844, "Non fraud", 39576.0, 79.6, 1.184024, -0.18025, -0.219955, 0.526883, -0.239527, -0.621944, 0.094158, -0.099066, 0.39001, 0.004704, -1.443588, -1.247817, -1.941468, 0.728833, 1.242557, 0.486606, -0.533727, 0.221993, 0.105958, -0.064915, -0.035271, -0.336223, -0.208773, -0.47163, 0.539458, 0.448844, -0.070945, 0.009376], [116728, "Non fraud", 74403.0, 108.98, 1.285558, -1.3955, 0.704554, -1.447012, -1.705504, -0.219318, -1.221544, -0.003531, -1.916783, 1.515628, 1.025462, 0.011264, 1.124374, -0.412632, 0.153037, 0.208701, -0.041656, 0.710468, 0.014757, -0.06479, -0.141128, -0.255878, -0.019374, -0.010217, 0.15135, -0.307957, 0.036502, 0.036747], [62815, "Non fraud", 50442.0, 107.14, -0.839091, 0.798711, 2.065383, 2.050032, -0.135777, 0.208174, 0.928432, 0.195158, -1.211577, 0.135444, 0.666307, 0.080033, -1.172116, 0.245134, -1.513662, 0.243605, -0.297423, 0.095969, -0.173359, 0.095755, -0.021828, -0.26304, 0.078357, 0.480037, 0.059114, -0.143244, 0.033954, 0.103642], [2161, "Non fraud", 1673.0, 20.0, 1.44575, -0.416548, -0.126949, -0.648858, -0.519767, -0.766014, -0.216859, -0.309605, -0.84487, 0.554783, -0.834282, -0.235858, 0.911358, -0.391536, -0.280705, 0.644145, 0.380253, -1.586173, 1.008597, 0.134093, 0.129975, 0.452383, -0.248374, -0.065706, 0.884661, -0.035893, -0.006486, 0.001906], [277842, "Non fraud", 167888.0, 10.0, 2.105011, 0.208331, -2.500591, 0.215669, 0.946648, -1.361937, 1.004589, -0.557819, -0.235353, 0.228888, 0.70773, 1.07293, 0.189792, 0.986303, -0.854491, -0.773122, -0.489147, 0.016273, 0.497595, -0.214989, 0.332409, 1.161839, -0.282679, -0.243187, 0.853359, 0.120527, -0.079149, -0.096632], [41499, "Non fraud", 40708.0, 30.0, 1.505949, -1.200605, 0.304129, -1.688491, -1.207355, 0.180559, -1.332641, 0.057101, -1.809479, 1.590444, 0.156773, -0.528816, 0.867576, -0.393706, 0.194927, 0.356455, -0.303286, 1.199943, 0.264575, -0.224985, -0.030125, 0.27523, -0.207283, -0.832405, 0.51448, -0.001629, 0.042915, 0.00724], [223878, "Non fraud", 143563.0, 10.99, 2.070009, 0.091105, -1.851193, 0.347385, 0.563863, -0.621814, 0.157197, -0.176958, 0.555962, -0.382113, -0.844103, -0.087647, -0.169255, -0.798434, 0.307852, 0.363151, 0.433408, -0.258203, 0.097187, -0.151667, -0.376883, -1.006578, 0.303382, 0.166026, -0.244724, 0.19604, -0.063543, -0.033172], [114886, "Non fraud", 73661.0, 147.2, -0.949913, -1.111152, 2.845267, -1.100618, -1.404191, 0.770405, -0.697717, 0.361678, 0.320231, -0.625061, -1.877956, 0.03382, 1.03565, -2.025491, -2.35233, 0.75571, 0.504572, -0.976955, 0.65644, 0.497471, 0.436793, 1.346398, -0.053597, -0.017646, 0.323704, -0.022874, 0.121526, 0.129964], [45823, "Non fraud", 42512.0, 28.75, 1.142514, -0.286777, 1.204414, 0.888461, -1.188851, -0.317019, -0.65819, 0.118052, 1.061445, -0.223595, -0.881709, -0.0257, -0.830822, -0.227666, 0.298749, 0.206609, -0.12346, -0.124031, -0.040967, -0.116411, -0.089855, -0.152628, 0.024748, 0.41105, 0.217435, 0.317208, 0.007395, 0.028904], [197489, "Non fraud", 132044.0, 358.98, 1.344772, -1.662086, -2.852775, -0.591005, 1.881064, 3.587847, -0.1544, 0.751606, 0.900779, -0.356592, -0.182859, 0.595664, -0.223183, 0.379295, 0.182503, -0.537998, -0.173996, -0.702397, 0.116602, 0.553937, 0.046079, -0.530174, -0.056743, 0.733422, -0.158396, -0.105567, -0.072269, -0.000801], [191466, "Non fraud", 129267.0, 5.41, -3.565426, 3.477905, -2.831556, -0.886672, -0.707109, -0.698496, -1.001844, 2.103479, 0.483688, 0.178686, -1.693066, 0.893209, 1.373244, -0.415971, -0.155418, 1.038602, 0.883026, 0.418298, -0.389583, 0.369806, -0.100713, -0.193712, 0.173717, 0.018206, 0.511757, 0.505273, 0.282892, 0.21375], [107129, "Non fraud", 70295.0, 27.0, 1.327008, -0.70669, 0.274958, -0.472468, -0.945859, -0.44965, -0.582427, -0.013706, -0.345999, 0.490898, -0.584313, -0.888949, -1.157556, -0.149469, -0.187829, 0.232656, 1.065126, -2.059701, 0.579898, -0.029283, 0.077388, 0.272821, -0.075869, 0.086802, 0.56869, -0.113858, 0.011734, 0.005532], [96018, "Non fraud", 65570.0, 1000.0, -0.604697, -2.752721, -1.067979, 1.693077, -0.587105, 0.349109, 1.474425, -0.387949, -0.201915, -0.476162, -1.360907, 0.485821, 1.63957, 0.228918, 1.064253, 0.770281, -1.031909, 0.079149, -0.085277, 2.007608, 0.201362, -1.643892, -0.897997, -0.987953, 0.136322, -0.734915, -0.157496, 0.19399], [268269, "Non fraud", 163138.0, 39.99, 1.993857, -0.564529, -0.663011, 0.275832, -0.342905, 0.091774, -0.634182, 0.012347, 1.30073, -0.018926, -1.832187, 0.147641, 0.538544, -0.353136, 0.450896, 0.556794, -0.816392, 0.225628, 0.043734, -0.089905, 0.119261, 0.524062, 0.012681, -0.997444, -0.160781, 0.632659, -0.021616, -0.05212], [30918, "Non fraud", 36138.0, 0.89, 1.235695, 0.426671, 0.460965, 0.761159, -0.455001, -1.240165, 0.149326, -0.272034, -0.116464, -0.307312, 0.368027, 0.787616, 1.005693, -0.434737, 0.978177, 0.344129, 0.065317, -0.508363, -0.32657, -0.039511, -0.257103, -0.700897, 0.160371, 0.694367, 0.201264, 0.071501, -0.017005, 0.035769], [53143, "Non fraud", 45831.0, 9.48, 1.2923, 0.291156, -0.01187, 0.531991, -0.04977, -0.661812, 0.063362, -0.144206, 0.121755, -0.277342, -0.760158, -0.146166, 0.087019, -0.276072, 1.177265, 0.703561, -0.253388, -0.028236, 0.074248, -0.058713, -0.333694, -0.989413, 0.036139, -0.388007, 0.301004, 0.139458, -0.027224, 0.024235], [34097, "Non fraud", 37512.0, 4.46, -1.081264, -0.211666, 1.73591, 0.654088, 1.039018, -0.592217, -0.313108, 0.284164, -0.795086, -0.039443, 1.504171, 0.515814, -0.366562, 0.608833, 1.017843, -0.281387, 0.039652, -0.088718, 0.967142, 0.316821, 0.001838, -0.33446, 0.200914, 0.00112, -0.52084, 0.20917, 0.068242, 0.13378], [92954, "Non fraud", 64185.0, 138.0, 1.212756, -1.51856, 0.653486, -1.263156, -1.774636, -0.292188, -1.157918, -0.04061, -1.625793, 1.322241, -0.282183, -0.775332, 0.669607, -0.457087, 1.098789, -0.428483, 0.649944, -0.125044, -0.839267, -0.090304, 0.043956, 0.295354, -0.083588, 0.069116, 0.224549, -0.0868, 0.045199, 0.045846], [270890, "Non fraud", 164314.0, 142.72, 0.024332, 0.425729, 0.4093, 0.199905, -0.131538, 0.132747, 1.428345, -0.547764, -1.379455, 0.689059, -0.863706, 0.323535, 1.233261, -0.441978, -0.806413, -2.599464, 0.212328, 0.785675, -0.393677, -0.374605, -0.271262, 0.11822, 0.089874, 1.077473, -0.684318, -0.710091, 0.048464, -0.013399], [258919, "Non fraud", 158878.0, 63.35, -1.259839, 0.771601, -0.210365, -0.487846, 0.494635, -1.240097, 0.662663, 0.37472, 0.148371, -1.820611, -0.962722, -0.460739, -1.12511, -1.18295, -0.373982, 0.129456, 1.377304, 0.347078, -0.091704, 0.130607, -0.137026, -0.526272, -0.076708, -0.242034, 0.139288, -0.063791, 0.212728, 0.088067], [90579, "Non fraud", 63078.0, 24.95, 1.282072, -0.401883, 0.077475, -0.612026, -0.720947, -0.546781, -0.605779, 0.010988, -1.110845, 0.376825, 2.113191, 0.096006, 0.122291, -0.897937, 0.331177, 1.204488, 1.083654, -0.848644, 0.148415, 0.108031, 0.351453, 0.95434, -0.13728, 0.194345, 0.515071, -0.042277, 0.025732, 0.024268], [80137, "Non fraud", 58349.0, 11.5, -0.919133, 0.715302, 1.852779, -0.051695, -0.449192, 0.564532, -0.409852, 0.798141, -0.091584, -0.799674, -0.129505, 0.542892, -0.150966, 0.01634, -0.649358, 0.600206, -0.502599, 0.785111, 0.774406, -0.084002, 0.032855, 0.044306, -0.227223, -0.471203, -0.036956, 0.332014, -0.035999, 0.018485], [73103, "Non fraud", 54981.0, 140.08, 0.900723, -0.779062, 1.078222, 0.400651, -1.348613, -0.20432, -0.61836, 0.137898, 0.962848, -0.34935, -0.164106, 0.172735, -0.55039, -0.145203, 1.008668, 0.023736, 0.183634, -0.567462, -0.577781, 0.126274, 0.193658, 0.417279, -0.06766, 0.48167, 0.026181, 1.106292, -0.04778, 0.036844], [169917, "Non fraud", 119929.0, 17.95, 1.932488, -0.232419, -0.368151, 1.305989, -0.311334, 0.109355, -0.557761, 0.074324, 1.046855, 0.140432, -1.101745, 0.389382, 0.248495, -0.199504, 0.30197, 0.182571, -0.594606, 0.21006, -0.659262, -0.200168, 0.241228, 0.894546, 0.108587, 0.680303, 0.027994, -0.514869, 0.058525, -0.024146], [95692, "Non fraud", 65424.0, 88.43, -1.7546, 0.164516, 0.637919, 1.009576, 0.515668, 0.816209, 0.125867, 0.876586, -0.456239, -0.310033, 0.405757, -0.132623, -1.213298, 0.963175, 2.2548, -1.46413, 1.336174, -1.731956, -1.223043, -0.249277, 0.256995, 0.967887, 0.676146, -0.662165, -0.431323, -0.192476, 0.329595, 0.06359], [105647, "Non fraud", 69628.0, 9.6, 1.315377, -0.767848, -0.263668, -0.394038, 1.069191, 4.137435, -1.55284, 1.081441, -0.355327, 0.723928, -0.80824, -0.016375, 0.272549, -0.373609, 0.175425, -1.057992, -0.506008, 1.719128, -0.654159, -0.418133, -0.478799, -0.860726, 0.044862, 0.956311, 0.456982, -0.37606, 0.099321, 0.03635], [206850, "Non fraud", 136401.0, 16.59, 2.077962, -0.314509, -1.463048, 0.479444, 0.217269, -0.269695, -0.053239, -0.140157, 1.047522, 0.054064, -2.114868, -0.287269, -0.639835, 0.10819, -0.407637, -0.160449, -0.375864, -0.181719, 0.397999, -0.238744, 0.003608, 0.267261, -0.068437, -1.015611, 0.22433, 0.525993, -0.052527, -0.075341], [211863, "Non fraud", 138603.0, 79.39, 1.906188, -1.744446, 0.43988, -0.641763, -1.873194, 0.755763, -2.008145, 0.46977, 1.040853, 0.652171, 0.246107, 0.110571, -0.541281, -1.032435, -1.34549, 1.357364, 0.154964, -0.31557, 0.858288, 0.095353, 0.428842, 1.300313, 0.128951, 0.808125, -0.382579, -0.087156, 0.05212, -0.024391], [11087, "Non fraud", 19161.0, 11.85, -0.693037, 0.402832, 2.663171, -1.75465, -0.239361, -0.188049, 0.347825, -0.098334, 2.581952, -2.082094, 0.579213, -2.176388, 1.283598, 0.981697, 0.235971, -0.682449, 0.545672, 0.09394, -0.517603, -0.110019, -0.132869, 0.196566, -0.340248, 0.022521, 0.385772, -0.812105, -0.067706, -0.156042], [115155, "Non fraud", 73768.0, 10.0, -0.904632, -0.2682, 1.402578, -1.839557, 0.655233, -0.107164, 0.051921, 0.227967, -1.635417, -0.085951, 1.455656, 0.294179, 0.100113, -0.150587, -1.1826, 0.317988, 0.618623, -2.030198, -0.313954, 0.101351, 0.375977, 0.96445, -0.255542, -0.241356, 0.377831, -0.188982, 0.05664, 0.070248], [112021, "Non fraud", 72479.0, 0.99, -1.154575, 0.571942, 2.696477, -0.640322, 0.443774, 1.572857, 0.235035, 0.286969, 0.896166, -0.128751, 0.604449, 0.727708, 0.251162, -1.076201, 0.692927, -1.28572, 0.677995, -2.366334, -2.228499, 0.161236, -0.041032, 0.663122, -0.098923, -0.584874, -0.354333, 0.347819, 0.026885, -0.224585], [139062, "Non fraud", 82989.0, 27.6, -0.269011, 0.651688, 1.84685, 0.789592, -0.682985, -0.234817, 0.022304, 0.00496, -0.724837, 0.305976, 1.702213, 0.675334, 0.475643, 0.249242, 1.560789, -0.428422, 0.269076, 0.575002, 2.552535, 0.315972, 0.18827, 0.574075, -0.029569, 0.635292, -0.791042, 1.233757, -0.021276, 0.148569], [120203, "Non fraud", 75744.0, 13.99, 1.238017, 0.222078, 0.017942, 0.429051, -0.02042, -0.358167, -0.037497, 0.003268, -0.130601, -0.10862, 0.960022, 0.518373, -0.07205, -0.062564, 0.482204, 0.892985, -0.486597, 0.464396, 0.348817, -0.044052, -0.277613, -0.878123, 0.025129, -0.405802, 0.261964, 0.119446, -0.032295, 0.015071], [201374, "Non fraud", 133856.0, 46.7, 1.816291, -0.241211, -0.421513, 1.387103, -0.044487, 0.480961, -0.27611, 0.154523, 0.722918, 0.091732, 0.646074, 2.026954, 0.882337, -0.300084, -1.949783, -0.318252, -0.322189, -0.585251, 0.411301, -0.106464, -0.433992, -1.05004, 0.423406, 0.652223, -0.323925, -1.163448, 0.049394, -0.024311], [151203, "Non fraud", 94973.0, 30.81, -0.481511, 0.994756, 0.397431, 0.104817, 0.941641, -0.752101, 1.407501, -0.113561, 0.776534, -0.881548, 0.976541, -3.398051, -1.774034, 2.622738, -2.387979, -0.280242, 0.26453, 0.542454, -0.797868, -0.454935, 0.012878, 0.182596, -0.321902, -0.124421, 0.316643, -0.658539, 0.051124, 0.112019], [232163, "Non fraud", 147064.0, 788.74, 0.794742, -2.967076, -3.276739, -0.189509, -0.751883, -1.707994, 1.46829, -0.868205, -0.989364, 0.611983, -0.871921, -1.194484, -1.018396, 0.82437, -0.331534, 0.203201, 0.641806, -1.483658, 0.504358, 1.43879, 0.937136, 0.980352, -0.900202, 0.161493, 0.443085, 0.218158, -0.248954, 0.040149], [184261, "Non fraud", 126169.0, 192.1, -9.955002, -1.773612, -6.259196, 0.485324, -5.481075, 1.725927, -2.486184, 4.674142, -1.812521, -1.595643, -1.122864, 2.183711, 1.116187, 3.520726, 0.65262, -0.100986, 2.018573, 1.550247, -1.333633, -2.794321, 0.345214, 0.467608, -2.007498, -1.35596, -0.743403, -0.118934, -1.788727, -1.617358], [235918, "Non fraud", 148596.0, 4.49, 0.092091, 0.999563, -0.325988, -0.627772, 0.917098, -0.582802, 0.892183, 0.016819, -0.344382, -0.672089, 1.15554, 0.710176, 0.081065, -0.848838, -0.969115, 0.481779, 0.152309, 0.215146, 0.010057, 0.040384, -0.278511, -0.683537, 0.10018, 0.665551, -0.461751, 0.085997, 0.219422, 0.076009], [276337, "Non fraud", 167025.0, 29.0, -0.548573, 0.438534, -0.529536, -0.502628, 0.919727, 0.161705, 0.305979, 0.645984, -0.105114, -0.725659, -0.410163, 0.808126, 0.269633, 0.452994, 0.038734, -1.071144, 0.721918, -2.214428, -1.26295, -0.105161, -0.013246, 0.02088, 0.321423, -0.94964, -0.888032, 0.250726, 0.195933, -0.024424], [159714, "Non fraud", 112838.0, 17.99, -0.09263, 0.724987, 0.452887, -0.69566, 0.749176, -0.982496, 1.387474, -0.608872, 0.450313, 0.312735, -0.733764, -0.036476, -0.030494, -0.372544, -0.266655, -0.311741, -0.596007, -0.881002, -0.149143, 0.237603, -0.392624, -0.532314, 0.046738, -0.094366, -0.484028, 0.09685, 0.030802, -0.278296], [112160, "Non fraud", 72535.0, 135.05, -0.994357, -0.431953, 2.941254, 1.89117, -0.764679, 1.212436, -0.427373, 0.531441, 0.847945, -0.760119, -1.188681, 0.748042, 0.311742, -1.18898, -0.964058, -1.277078, 0.966426, -0.39054, 0.919386, 0.434266, 0.116894, 0.532274, 0.088216, 0.130351, 0.435101, -0.016611, 0.067393, 0.022923], [182599, "Non fraud", 125470.0, 1.0, -1.135591, 1.214682, 0.368201, -1.368724, 0.920709, -0.946858, -0.099243, -2.863553, -0.420314, -1.619308, -1.040004, 0.354023, -0.150265, 0.674238, -0.366885, 0.325723, -0.840629, -0.093967, -1.751537, 0.296224, -0.924294, 1.357582, -0.555555, 0.019061, 0.23317, -0.328543, 0.088511, 0.164519], [181262, "Non fraud", 124899.0, 1.98, 2.078997, 0.219204, -1.707572, 0.396844, 0.518551, -0.829964, 0.243566, -0.28249, 0.366316, -0.403666, -0.467685, 0.590249, 0.940974, -1.020158, 0.113994, 0.291339, 0.404514, -0.396625, 0.067087, -0.098218, -0.358032, -0.883581, 0.322602, 0.505721, -0.221716, 0.172037, -0.057139, -0.029093], [8032, "Non fraud", 11000.0, 39.0, -1.609244, -1.5515, 1.886067, 0.84089, 1.287249, -1.904989, -1.28638, 0.082625, 1.363232, -0.468527, 0.359041, -3.032029, 0.990237, 1.727125, 1.0191, -0.005137, 0.731647, 0.636931, 0.714197, 0.622701, 0.240299, 0.289634, 0.427355, 0.373731, -0.737319, 1.069298, -0.004704, 0.196278], [32098, "Non fraud", 36637.0, 150.0, -3.324592, -1.397243, -0.593116, -3.246512, 1.327869, 3.051357, -0.584979, 1.574584, 1.408679, -1.688112, -0.50082, 0.572845, 0.08892, 0.079412, 0.900372, 0.491324, -0.723604, 0.602579, 0.232212, 0.220277, -0.072614, -0.281464, -0.394897, 1.081996, 0.694658, -0.175042, -0.023463, -0.339131], [115597, "Non fraud", 73928.0, 16.9, 1.263771, -0.108629, 0.28696, -0.199247, -0.321967, -0.189252, -0.300123, 0.035685, 0.117677, 0.01271, 0.717582, 0.626166, 0.208655, 0.276617, 0.567868, 0.883365, -0.935838, 0.349743, 0.555195, -0.000911, -0.126473, -0.420483, -0.030653, -0.44987, 0.196282, 0.90522, -0.076051, -0.005769], [253020, "Non fraud", 156061.0, 9.99, -0.954246, 0.515525, 1.836669, -0.798822, 0.419699, 0.147732, 0.218833, 0.155383, 0.46471, -1.043668, -1.467357, -0.260439, -0.186443, -0.32491, 0.304994, 0.157581, -0.638929, 0.505083, -0.103294, -0.109763, 0.168358, 0.542167, -0.555967, 0.501303, 0.73886, -0.117675, -0.041973, 0.053583], [99339, "Non fraud", 67074.0, 223.36, 0.742019, -1.222156, 0.185903, -1.31086, -0.819324, 0.196193, -0.278276, 0.189268, 1.360808, -1.164032, 1.82577, 1.689824, 0.02185, 0.247468, 0.924857, -1.028256, 0.351648, -0.517627, 0.347797, 0.3105, 0.21378, 0.403372, -0.220294, -0.198645, 0.284486, 0.037024, 0.01192, 0.038403], [119704, "Non fraud", 75551.0, 1.98, -1.443205, 0.193201, 1.594627, -0.260035, 1.107111, -1.663924, 0.237176, -0.112919, -0.337688, -0.795135, -0.35388, -0.13527, -0.145766, -0.405104, 0.484939, 0.689157, -0.279418, -0.207958, -0.802069, -0.23166, -0.229471, -0.776758, -0.198815, 0.343613, -0.093401, -0.067845, -0.012639, 0.097614], [16762, "Non fraud", 28125.0, 128.57, -0.757135, 0.41543, 0.661756, 0.081974, -0.565781, 0.271352, 0.371871, 0.682246, -0.099029, -0.698728, -0.459393, -0.696985, -2.623649, 0.819676, -0.806883, 0.338663, -0.196668, 0.627135, 0.937784, -0.04717, -0.078698, -0.589758, 0.13938, -0.561325, 0.063113, 0.266946, -0.186865, -0.060745], [55336, "Non fraud", 46891.0, 7.63, -0.443342, 0.916165, 1.55163, 1.388841, -0.129594, -0.187645, 0.48487, 0.191448, -0.036014, -0.048102, -0.646368, -0.719293, -2.065621, 0.405414, 0.396159, -1.230288, 0.855739, -0.560416, 0.613249, 0.004598, -0.034358, 0.179147, -0.091015, 0.361523, -0.196926, -0.237023, 0.418131, 0.203747], [78642, "Non fraud", 57627.0, 2.61, -3.708873, 3.057638, -1.627812, -2.710112, 1.568527, 4.758915, -3.178665, -7.32212, 0.376124, 0.033067, -0.500786, 0.587814, -0.314353, 0.787339, 0.355927, 0.950699, -0.254821, 0.212687, -0.453083, -1.772074, 8.355643, -3.282933, 1.20182, 0.883361, 0.1027, 0.837169, 0.374019, 0.190204], [103560, "Non fraud", 68712.0, 2.69, 1.201228, 0.200174, 0.617933, 0.554089, -0.525636, -0.785506, -0.037396, -0.070227, -0.224462, 0.103264, 1.660792, 1.110338, 0.166382, 0.454008, 0.319675, 0.441062, -0.597811, -0.109973, 0.093481, -0.088799, -0.192087, -0.597111, 0.148845, 0.529622, 0.158784, 0.064465, -0.032962, 0.011009], [153439, "Non fraud", 99068.0, 59.99, 1.927032, 0.042497, -1.570477, 1.049877, 0.066881, -1.191513, 0.06532, -0.374873, 2.128599, -1.062518, 0.351191, -2.486163, 1.306016, -0.2185, -1.138331, 0.096175, 1.988292, 0.476508, -0.345596, -0.1259, -0.150534, 0.00147, 0.003593, -0.084778, 0.040259, 0.59216, -0.078886, -0.027158], [165434, "Non fraud", 117431.0, 45.0, 1.816641, -0.493693, 0.006994, 1.208313, -0.692132, 0.39378, -0.918977, 0.347441, 1.071171, 0.324247, 0.528002, 0.434806, -1.036068, 0.192978, 0.10768, 0.835572, -0.967176, 0.923821, -0.385488, -0.200215, 0.111037, 0.273646, 0.285342, 0.689576, -0.40753, -0.811073, 0.055085, -0.018347], [54747, "Non fraud", 46597.0, 79.98, 1.28405, -1.268746, -0.284519, -3.037182, -0.658148, 0.33243, -0.731701, 0.061527, 0.803498, -0.736631, 0.395347, 1.631183, 1.5263, -0.17595, 0.817208, -2.349816, -0.162686, 1.789614, 0.838604, -0.264388, -0.308656, -0.223951, -0.277029, -1.309989, 0.711543, -0.648321, 0.113396, 0.017885], [268827, "Non fraud", 163400.0, 93.8, 1.90281, -0.654232, -1.529838, -0.020955, 0.102269, -0.121496, -0.04075, -0.030076, 1.043236, -0.051389, -0.378568, 0.408174, -0.936827, 0.439143, -0.790123, 0.053977, -0.685403, 0.326431, 1.028687, -0.078377, -0.14244, -0.426326, 0.002817, -1.105185, -0.015627, -0.047473, -0.052676, -0.063513], [158942, "Non fraud", 111994.0, 46.79, -0.334676, 0.583423, 0.274753, -0.649114, 0.495527, -0.769698, 1.050238, -0.028183, -0.237677, -0.297468, 0.615792, 0.455243, -0.911892, 0.496309, -1.304627, -0.157164, -0.432958, -0.24539, 0.217117, 0.038809, -0.070738, -0.138189, 0.180781, 0.005641, -0.888058, 0.13514, 0.370541, 0.265711], [272562, "Non fraud", 165151.0, 34.48, 0.353432, 0.773325, 0.36683, 0.906586, 0.740403, 0.030778, 0.993167, -0.397095, -0.337913, 0.12098, -0.81971, 0.097798, 0.761653, 0.106517, 1.390656, -1.455146, 0.383767, -0.099628, 3.01147, 0.400403, -0.177284, -0.172806, 0.071224, 0.486937, -0.843256, -0.279775, 0.085252, 0.004083], [98196, "Non fraud", 66561.0, 1.89, -1.417341, 1.397321, 0.939039, -0.181701, -0.126869, 0.373797, 0.126048, 0.598819, 0.558777, 0.611845, 0.55411, 0.583174, -0.804675, -0.076909, -0.977885, -0.499082, 0.078326, -0.189415, 0.295354, 0.356352, -0.070776, 0.350652, -0.159954, -0.271275, -0.066395, 0.384993, 0.39557, 0.077093], [140220, "Non fraud", 83601.0, 1.29, 1.261307, 0.266425, 0.518427, 0.619025, -0.462952, -0.989256, 0.07485, -0.216924, 0.014789, -0.071342, -0.180618, 0.475852, 0.514318, 0.199556, 1.009791, 0.292977, -0.433941, -0.567362, -0.120609, -0.081547, -0.255364, -0.727563, 0.134687, 0.385727, 0.224218, 0.093903, -0.027656, 0.019373], [230756, "Non fraud", 146465.0, 144.9, 1.732306, -0.562025, -1.69501, 0.565527, 0.111257, -0.098346, -0.167099, 0.115265, 0.718801, -0.276045, 0.625995, -0.203102, -1.621006, -0.607378, -0.022759, 0.843577, 0.275364, 0.931312, 0.028844, 0.042184, -0.018106, -0.338065, 0.087156, 0.166856, -0.290182, 0.186164, -0.066569, -0.012699], [20178, "Non fraud", 30839.0, 36.77, 1.090482, 0.087727, 0.265693, 1.218737, 0.079936, 0.352878, 0.02384, 0.122219, -0.012154, 0.019296, 0.939213, 1.330649, 0.259748, 0.166893, -0.812128, -0.446541, -0.129333, -0.420495, 0.033777, -0.08427, -0.049771, 0.014419, -0.144975, -0.274671, 0.680506, -0.31431, 0.032967, 0.00836], [107584, "Non fraud", 70508.0, 95.0, -1.686989, -0.101418, 2.550502, 0.437575, 0.28665, 0.04754, 0.180268, 0.183117, -0.022634, -0.820756, -0.492191, 0.717232, 1.134065, -0.635439, 0.192353, 0.108847, -0.440944, -0.275401, -1.329451, 0.023594, 0.250541, 0.747843, -0.128527, 0.124383, 0.54088, -0.309718, -0.053513, 0.201997], [268971, "Non fraud", 163466.0, 35.97, 1.924565, -0.377196, -0.230707, 1.812982, -0.542799, 0.155197, -0.795575, 0.197632, 0.098582, 1.158819, -1.301825, -1.287997, -1.485784, 0.10479, 0.408395, 1.60676, -0.702154, -0.218684, -1.215298, -0.180386, 0.101395, 0.118914, 0.340383, 0.71788, -0.825063, 2.214588, -0.181382, -0.057697], [116198, "Non fraud", 74181.0, 10.0, -0.514474, 0.405787, 0.966528, -1.3136, 0.495883, 0.274953, 0.411287, 0.159853, 0.282844, -0.695806, -0.571668, 0.140106, -0.62612, -0.160917, -1.543828, 0.393162, -0.797945, 0.378763, 0.679071, -0.12772, -0.02007, 0.013997, -0.323119, -0.920566, -0.194706, 0.942812, -0.098375, 0.11535], [214860, "Non fraud", 139847.0, 7.69, -0.846233, 1.699797, -1.40078, -1.331462, 1.040524, -1.019515, 1.25316, 0.158487, -0.576015, 0.044866, 0.868703, 1.118688, 0.428942, 0.942252, -0.878794, -0.461018, -0.500193, -0.033377, 0.015343, 0.136267, 0.285874, 1.018357, -0.137678, 0.768891, -0.18453, 0.048051, 0.487652, 0.320664], [232527, "Non fraud", 147208.0, 1277.18, -0.329998, -4.887861, -3.314656, -0.226639, -0.774852, 1.038, 1.212048, -0.188202, -0.935973, 0.319824, 1.0414, 0.000202, -0.130013, 0.707106, 0.205166, 0.299884, 0.73754, -1.963056, -0.288647, 2.433959, 1.131033, 0.483583, -1.091608, -1.528137, -0.403747, -0.044583, -0.247958, 0.121546], [236673, "Non fraud", 148907.0, 1.0, 2.148854, 0.029164, -1.728917, 0.117014, 0.534369, -0.758135, 0.285284, -0.381606, 0.557309, -0.004285, -1.499761, 0.343849, 0.97914, 0.279595, 0.736167, 0.052075, -0.922607, 0.184224, 0.155272, -0.166444, 0.184798, 0.744658, -0.13687, -0.946315, 0.431937, -0.048571, -0.016062, -0.067709], [163545, "Non fraud", 116029.0, 1.98, 2.053295, 0.174642, -1.78478, 0.222199, 0.710306, -0.362127, 0.147227, -0.129731, 0.096885, -0.239566, 1.043761, 1.291476, 1.07291, -0.872771, -0.587833, 0.550321, 0.055647, 0.156515, 0.446841, -0.068121, -0.320275, -0.801516, 0.278089, 0.214305, -0.213568, 0.169032, -0.060136, -0.041356], [234962, "Non fraud", 148186.0, 9.98, -1.215138, 2.048498, -1.025752, -0.280789, 0.817727, -0.243865, 0.62624, 0.311696, -0.007175, 0.138206, -1.025078, 0.276898, 1.216401, -1.04388, 0.402512, -0.051453, 0.727195, -0.063861, 1.068563, 0.52448, -0.35475, -0.732244, 0.050029, -0.041154, -0.433892, 0.324826, 0.453625, 0.408859], [134410, "Non fraud", 80794.0, 16.1, 1.150991, 0.051684, 1.240378, 1.27573, -0.876139, -0.268327, -0.470205, -0.006442, 0.609278, -0.173597, -0.505161, 0.953102, 1.21575, -0.47887, 0.498584, 0.189657, -0.469259, 0.072348, -0.443051, -0.039835, 0.143989, 0.627741, -0.113929, 0.43427, 0.546348, -0.262939, 0.074712, 0.040006], [47055, "Non fraud", 43058.0, 876.94, -0.414129, -2.444952, -2.513719, 0.934818, 1.536608, 3.527756, 0.733567, 0.594066, -0.277512, -0.80927, 0.240162, -0.160648, 0.106964, -0.611051, 1.426258, 1.08719, -0.005955, 0.993298, -0.519531, 1.799358, 0.332969, -1.14589, -0.823394, 0.916895, 0.342133, -0.525627, -0.124308, 0.199787], [85654, "Non fraud", 60869.0, 0.69, -1.612385, 1.280065, 1.053242, -1.485839, -0.891034, -0.502629, -0.372143, 0.971334, -1.915384, 0.174203, 0.48774, 0.603505, 0.422192, 0.66044, -0.396736, -0.519466, -0.394419, 1.457834, -0.917055, -0.422951, -0.631697, -1.591293, 0.032523, -0.0709, 0.170342, 0.054558, 0.101114, 0.050117], [121850, "Non fraud", 76343.0, 1.0, -1.139881, 1.985957, -0.066337, 1.117145, -0.231786, -1.166888, 0.085554, 0.712801, -0.794607, -0.916634, -0.449419, -0.287657, -0.349259, -0.439903, 1.141698, 0.375893, 1.26579, 0.844411, 0.186381, -0.099281, 0.124119, 0.215304, -0.103368, 0.261471, -0.179417, -0.323396, 0.057083, 0.112219], [279655, "Non fraud", 169013.0, 30.0, 2.026719, -0.212543, -1.26832, 0.087977, 0.20909, -0.432467, 0.100925, -0.251453, 0.877956, -0.270361, -0.992419, 1.218467, 1.445656, -0.222704, -0.375635, -0.461966, -0.318856, -0.694809, 0.464293, -0.058435, -0.160025, -0.221548, 0.17367, 0.527957, 0.03574, -0.113394, -0.024933, -0.044367], [102745, "Non fraud", 68343.0, 50.0, -0.416011, 0.972265, 1.65959, 0.845067, 0.182393, -0.566147, 1.099924, -0.463266, -0.592178, -0.002446, -0.186769, 0.407129, 1.20307, -0.191347, 1.063587, -0.33646, -0.406162, -0.075175, 0.445073, 0.160886, 0.041339, 0.31955, -0.138271, 0.417836, -0.231196, -0.461306, -0.123412, -0.057118], [178933, "Non fraud", 123848.0, 0.99, 2.012264, 0.116133, -1.605384, 0.334127, 0.431017, -0.570573, 0.080171, -0.082684, 0.199713, -0.221765, 1.364469, 0.987611, 0.082561, -0.659129, -0.476168, 0.39563, 0.336057, 0.023429, 0.202578, -0.149645, -0.294188, -0.763977, 0.355165, 0.614012, -0.322134, 0.147874, -0.062058, -0.039217], [231085, "Non fraud", 146608.0, 0.68, -9.98154, 8.762508, -5.871641, -3.159649, -1.876741, -2.290867, 0.126184, 1.547721, 6.416225, 11.11902, 1.166842, 0.847483, -1.158564, -0.841439, -0.287729, -1.054558, -0.488424, -0.321437, -0.978276, 4.411454, -0.921484, 0.376026, 0.302607, -0.057523, 1.396582, -0.063795, 1.212343, -0.589916], [21736, "Non fraud", 31832.0, 1.98, 1.315046, 0.358244, -0.034711, 0.495199, 0.064695, -0.592338, 0.095146, -0.172867, 0.034476, -0.292197, -0.753003, 0.154675, 0.740258, -0.41069, 1.114103, 0.705322, -0.330657, -0.071388, 0.114853, -0.030191, -0.33828, -0.953255, 0.020449, -0.498328, 0.340025, 0.145793, -0.021711, 0.023013], [220987, "Non fraud", 142383.0, 73.53, -1.550395, -0.303596, 2.177477, 3.696485, 1.797933, 0.78557, 0.004607, 0.357964, -1.347842, 1.068973, -0.15996, -0.661771, -1.705321, -0.020366, -1.930121, 0.023097, -0.175963, 0.471361, 0.10438, 0.462847, 0.220193, 0.388186, -0.135577, 0.676437, 0.725913, 0.362547, -0.190436, -0.134642], [264042, "Non fraud", 161237.0, 35.4, 2.250161, -1.438025, -0.787714, -1.582443, -1.21705, -0.320274, -1.244497, -0.133849, -1.13754, 1.511052, -0.994569, -0.483639, 1.144897, -0.685529, -0.040156, -0.464178, 0.393041, -0.079343, -0.242811, -0.328453, -0.132713, 0.108006, 0.261621, 0.600457, -0.248214, -0.203597, 0.025219, -0.034352], [7518, "Non fraud", 10278.0, 2.5, 1.18133, 0.355557, 0.710944, 1.256526, -0.413757, -0.663457, -0.134517, -0.092396, 1.179715, -0.182289, 2.335256, -1.925004, 0.81266, 2.122727, -0.350411, 0.315423, 0.123281, 0.626129, -0.357882, -0.230045, -0.148889, -0.223526, 0.015134, 0.435275, 0.436711, -0.50442, -0.012341, 0.009139], [183246, "Non fraud", 125714.0, 369.0, -1.526346, -1.127517, 2.239099, -0.366904, -0.785358, 3.917353, 0.271809, 1.105626, 1.127335, -1.568615, -0.364196, 0.505521, -0.832287, -1.020566, -1.502958, -0.578218, 0.403948, -0.22629, -0.377328, 0.648139, 0.370697, 0.873338, 0.41078, -0.926071, 0.455728, 0.652261, 0.001021, 0.073633], [186434, "Non fraud", 127105.0, 2726.76, -3.361372, -9.257514, -3.995965, 2.086214, -2.123013, 2.772714, 2.835988, -0.094091, 0.610773, -1.288931, 0.745658, 1.082702, 0.045659, 0.796739, 0.379004, 0.001296, 0.166773, -0.827483, -1.114739, 5.268828, 1.292737, -2.275856, -1.887293, -0.838253, -1.77578, -0.062147, -0.519424, 0.40505], [141396, "Non fraud", 84286.0, 10.5, 1.395989, -0.474132, 0.698946, -0.662871, -1.207507, -0.961086, -0.656579, -0.168337, -0.70998, 0.601909, -0.172147, -0.465741, 0.389376, -0.258339, 0.890061, 1.308684, 0.160506, -1.446727, 0.521458, 0.087191, -0.006521, -0.123225, 0.097984, 0.387398, 0.247951, -0.412311, 0.018469, 0.025047], [38751, "Non fraud", 39534.0, 22.74, -0.589163, 0.801815, 0.786283, -1.744982, 0.216165, -0.204261, 0.407493, -2.035287, 0.954141, -1.118685, -0.993338, 1.02745, 1.385899, -0.477176, 0.435052, -1.398253, 0.215729, -0.181818, 2.25923, -0.13946, 1.392526, -0.314699, -0.188438, -0.354801, 0.131369, 0.075412, 0.080549, -0.097645], [108279, "Non fraud", 70835.0, 235.89, -1.15261, 0.91462, 0.773422, 1.341812, -1.198621, 0.733782, 1.020354, 0.545379, -0.539605, -0.184376, 0.928042, 0.320284, -1.446224, 0.739743, -0.352793, -0.819862, 0.650343, -0.032892, 0.924444, -0.048156, 0.052946, 0.319036, 0.16404, 0.203804, -0.126513, -0.252274, 0.260613, 0.064359], [178207, "Non fraud", 123525.0, 9.8, -0.698902, 0.036744, 0.747007, -3.070706, -0.371595, 0.431281, -0.253194, -0.37058, -1.498557, 2.055386, 0.312242, -0.387999, 1.134645, -1.237394, -1.068253, -0.292377, -0.346155, 0.647915, 0.126137, -0.255373, -0.07783, 0.19715, -0.243533, 0.183878, -0.069166, -0.361757, -1.536694, -0.743986], [11963, "Non fraud", 20658.0, 134.22, -1.849175, -1.717241, 0.606939, -2.712053, 0.231939, -0.608639, -0.675035, 0.410203, 1.244163, -1.775073, -0.582874, -1.754898, 3.13962, 1.300657, -0.216583, -1.971676, 0.784191, 1.492471, -0.704236, 0.081933, -0.200378, -0.45746, 0.121874, -0.992942, -0.105379, -0.261465, 0.0184, -0.155046], [75610, "Non fraud", 56155.0, 13.78, -1.178773, 1.15121, 1.315774, -0.229358, 0.348283, 0.168087, 0.505351, 0.347994, -0.545723, -0.37313, 0.862269, 0.512122, -0.260579, 0.395684, -0.036978, 0.325045, -0.757523, 0.346101, -0.962827, -0.250318, 0.326913, 0.874881, -0.374993, -0.292491, 0.266879, -0.379255, -0.453856, -0.198017], [231929, "Non fraud", 146983.0, 123.45, -1.212789, 0.88944, -1.241131, -2.193664, -1.08347, 0.025509, -0.313615, 1.177762, -1.730414, -0.263558, -0.381121, -0.993806, -1.268933, 1.193954, -0.546856, 1.823517, 0.098568, -0.091246, 0.761852, -0.433523, 0.589257, 1.088946, -0.273392, 0.108045, 0.536541, 0.064481, -0.60949, -0.255205], [229813, "Non fraud", 146063.0, 22.0, -1.006122, 0.745225, -1.475676, -0.108985, 0.454473, -0.927399, 0.375428, 0.453458, -0.223414, -0.842339, 0.571793, 0.080286, -0.766254, -0.216916, 0.17671, 0.562577, 0.427559, 1.425669, 0.197136, -0.396101, 0.349008, 0.998855, 0.065412, -0.557895, -0.328902, -0.183537, -0.472323, -0.408281], [25174, "Non fraud", 33527.0, 2.99, 1.257619, 0.221068, 0.505061, 0.625762, -0.513818, -1.001758, 0.039711, -0.186052, 0.098045, -0.055945, -0.274589, 0.182787, -0.036552, 0.309631, 1.070478, 0.319056, -0.402394, -0.499391, -0.117431, -0.113399, -0.260671, -0.7736, 0.139804, 0.370724, 0.204944, 0.095568, -0.03158, 0.018486], [142228, "Non fraud", 84614.0, 9.21, -12.765727, 9.997699, -7.800266, -0.870306, -6.936743, -1.617926, -6.13117, 8.192233, 1.480859, 4.096731, -0.380764, 3.806882, 0.768218, 4.222471, 0.12426, 1.702222, 2.514471, -0.094566, -1.045703, 1.56444, -0.185198, -1.172504, 1.188796, 0.08292, 1.465606, 0.228001, 0.817601, 0.677857], [35920, "Non fraud", 38320.0, 1.5, 1.148633, 0.197865, 0.354244, 1.009451, -0.224726, -0.317409, -0.039774, 0.105406, -0.120355, 0.174541, 1.512547, 0.418017, -1.292467, 0.854409, 0.58192, -0.053006, -0.258835, -0.031351, -0.507589, -0.250707, 0.105241, 0.298411, -0.040426, 0.204957, 0.519706, -0.32462, 0.0197, 0.005871], [263990, "Non fraud", 161214.0, 9.56, 2.204478, -0.56481, -1.51329, -1.125213, -0.118271, -0.824342, -0.225395, -0.269303, -1.076689, 1.004951, 1.318472, 0.50143, 0.783181, 0.201476, -0.503275, 1.029582, -0.098545, -1.344783, 0.951529, 0.036361, 0.104352, 0.220043, 0.237607, 0.78091, -0.056591, -0.372445, -0.051425, -0.063987], [225997, "Non fraud", 144470.0, 9.39, 2.147257, -1.204425, -1.799627, -1.933752, 1.306594, 3.6478, -1.598668, 0.974291, -0.080944, 0.727025, 0.063125, -0.331356, 0.127656, -0.262971, 0.626679, 1.179706, 0.033933, -1.648482, 0.49545, 0.044511, -0.046234, -0.227332, 0.42715, 0.67577, -0.458835, -0.464307, 0.032637, -0.04666], [146898, "Non fraud", 87949.0, 0.89, 0.111822, 0.952181, -0.133917, -0.402572, 0.588427, -1.129644, 1.05754, -0.273523, -0.00241, -0.28679, -0.95819, -0.090627, -0.063992, 0.440162, 0.515605, -0.479149, -0.438253, 0.101651, -0.006541, -0.036551, 0.368475, 1.347236, -0.140529, -0.045288, -0.799697, -0.212435, 0.513895, 0.320588], [156, "Non fraud", 98.0, 14.98, -0.646513, 1.004199, 1.616224, -0.099628, -0.122477, -0.671327, 0.656183, 0.009755, -0.635963, -0.047364, 1.530938, 0.824084, 0.148016, 0.266959, 0.120395, 0.319465, -0.593328, 0.044223, 0.232081, 0.093191, -0.147934, -0.420046, 0.061424, 0.520997, -0.238845, 0.030135, 0.140481, 0.101163], [43131, "Non fraud", 41384.0, 100.0, 1.068463, -0.686725, 0.618246, -0.050338, -0.626785, 0.620252, -0.659147, 0.213984, 1.12356, -0.478367, -1.29819, 0.293279, 0.39218, -0.490608, 0.616533, 0.167849, -0.168084, -0.510785, 0.222913, 0.132837, -0.099671, -0.253802, -0.116485, -0.836784, 0.145359, 1.071746, -0.035228, 0.019068], [110056, "Non fraud", 71661.0, 90.5, 1.337964, -1.079704, 0.0729, -1.350969, -1.358764, -1.070015, -0.518437, -0.24163, -2.408089, 1.590733, 1.463111, -0.190549, 0.046416, 0.213417, -0.357629, -0.466423, 0.481654, -0.093736, 0.222967, -0.196351, -0.41995, -1.097309, 0.12291, 0.466087, 0.206422, -0.516772, -0.014005, 0.021601], [84867, "Non fraud", 60498.0, 118.7, -5.982644, -7.852369, 1.646342, 2.062436, 7.179317, -4.879026, -4.259502, 0.491576, -1.535109, 1.442547, 1.083892, 0.225335, -0.640393, 0.934645, 0.754039, -2.396168, 0.367994, 1.654295, -0.142735, 1.905475, 0.423432, -0.682203, 1.408753, -0.069675, 0.790411, -0.175629, -0.401572, -0.003885], [45567, "Non fraud", 42405.0, 13.47, 1.381133, -0.292588, 0.018485, -0.798929, -0.524181, -0.730262, -0.128557, -0.223506, -1.512678, 0.809713, 1.200888, 1.096315, 1.310095, 0.246959, -0.08869, -1.142567, -0.374054, 0.812023, -0.076869, -0.381102, -0.760625, -1.773711, 0.220844, 0.008526, 0.036052, 0.622527, -0.073748, -0.00173], [72199, "Non fraud", 54608.0, 9.99, 1.131577, -0.158483, 1.146333, 1.157782, -0.842782, 0.294385, -0.73148, 0.311432, 0.793191, -0.005857, 0.454216, 0.574288, -0.907375, -0.000919, -0.397268, 0.414643, -0.567816, 0.654046, 0.209827, -0.169444, -0.042796, 0.002438, -0.047463, -0.01685, 0.398223, -0.403012, 0.06212, 0.022922], [90885, "Non fraud", 63216.0, 500.0, -4.308101, -1.72382, -0.775343, 0.063042, -3.060871, 0.368818, 1.133974, 0.756463, 0.645391, -1.197665, -0.549675, 1.226365, 1.163154, -0.068613, -0.118779, 0.682143, 0.227386, -0.870971, -0.75959, -1.606317, -0.265011, 0.667859, 1.31063, 0.558001, -1.048497, 0.692209, 0.089729, 0.143209], [255339, "Non fraud", 157174.0, 26.0, -0.0918, -0.617554, 1.575175, -2.692266, -0.595496, 1.232859, -0.916551, 0.319514, -2.005728, 0.844587, -0.319532, -0.139482, 1.964359, -1.134139, -0.73, 0.140512, -0.284717, 1.219616, 0.808831, -0.067737, -0.086118, 0.225183, -0.185886, -0.339117, -0.259688, -0.145111, 0.184738, 0.137365], [188807, "Non fraud", 128139.0, 1.29, 2.020448, 0.175254, -1.58573, 0.337108, 0.45756, -0.643749, 0.143045, -0.149131, 0.09417, -0.234069, 1.441841, 1.344427, 0.787876, -0.804081, -0.601285, 0.418684, 0.242759, 0.023272, 0.266269, -0.098018, -0.291221, -0.728554, 0.340842, 0.692803, -0.284587, 0.139808, -0.060682, -0.037006], [61906, "Non fraud", 50042.0, 81.55, -2.349432, 1.853285, 1.276166, 1.462443, -1.270051, 2.272457, -1.816956, -3.820375, 0.561757, -0.251169, 0.263532, 1.660949, -0.697896, -0.041331, -2.185003, -1.219631, 1.441955, -0.412075, 1.49521, -1.28612, 4.310282, -1.863024, 0.577547, -0.055392, -0.312458, -0.409264, 0.437442, 0.037435], [127657, "Non fraud", 78416.0, 1.4, -0.683932, 1.299624, 0.641746, 0.926875, 0.542291, 1.001675, 0.146251, 0.728867, -0.714325, -0.165113, -0.032725, 0.877773, 0.504677, 0.361548, -0.492064, -0.586799, 0.097119, 0.170221, 1.446713, 0.080608, -0.018406, 0.199336, -0.281884, -1.123646, 0.071553, -0.166972, 0.305553, 0.120383], [100898, "Non fraud", 67659.0, 1.0, -1.208083, -0.053215, 3.046548, -1.31556, -1.678349, -0.092845, -0.811889, 0.380958, 0.577105, 0.131951, -1.247116, -0.952233, -1.398784, -1.425408, -1.809202, 0.632193, 0.844799, -1.260987, 0.332068, 0.166593, 0.121725, 0.733999, -0.262043, 0.729844, 0.526173, -0.13249, 0.326388, 0.179467], [158684, "Non fraud", 111641.0, 9.8, -0.117731, 0.710544, -1.290412, -0.957803, 2.78214, 0.806526, 1.375332, 0.025765, -0.662528, -0.794171, 0.976917, -0.034424, -0.832893, -0.653559, -0.472063, -0.786398, 1.018715, -0.589896, -0.702695, -0.093036, 0.207991, 0.889751, -0.263043, -0.985674, -0.489623, 0.62814, -0.007934, -0.024289], [23725, "Non fraud", 32883.0, 5.76, 1.228164, 0.212966, 0.472349, 1.146348, -0.512753, -0.851006, -0.034243, -0.125421, 0.274095, 0.029626, -0.592781, -0.283008, -0.811143, 0.432079, 1.099368, 0.185441, -0.429606, 0.186545, -0.483612, -0.190283, 0.15571, 0.481743, -0.150253, 0.394112, 0.691554, -0.205973, 0.020059, 0.02096], [17248, "Non fraud", 28566.0, 119.24, 1.14401, -0.640487, 0.194911, -0.173791, -1.256695, -1.352945, -0.317943, -0.250031, -0.649008, 0.078542, 0.303568, -0.514503, -0.206312, -1.267818, 0.054065, 0.976364, 1.515043, -1.383592, 0.433482, 0.278662, 0.017217, -0.180679, -0.037588, 0.857206, 0.360811, -0.34536, 0.00137, 0.061829], [79705, "Non fraud", 58138.0, 172.02, -1.193849, -1.871586, 2.224898, -1.09014, -0.536515, -0.041466, -0.475425, 0.202289, 0.277062, -0.21606, -1.276334, -1.318878, -1.792345, -1.091195, -1.461576, 0.385015, 0.859756, -1.527482, -0.134401, 0.517526, 0.411004, 0.983597, 0.200209, 0.086313, 0.413561, -0.096361, -0.200163, -0.192922], [248937, "Non fraud", 154163.0, 9.99, 1.970988, -0.417584, -0.520352, 0.200991, -0.238474, 0.374172, -0.711364, 0.157796, 1.101348, -0.027423, 0.471891, 1.433278, 0.936698, -0.202517, -0.242284, 0.375924, -0.965369, 0.758792, 0.21389, -0.114716, 0.222789, 0.86683, 0.08299, 0.371759, -0.027009, -0.244613, 0.037756, -0.041709], [133683, "Non fraud", 80488.0, 21.0, -0.525879, 0.994928, 1.394224, 1.170948, 0.428374, 0.462944, 0.681445, 0.053662, -0.404137, -0.261587, -1.066911, 0.003178, 0.056953, -0.045133, 0.294743, -1.070768, 0.445312, -0.517735, 0.990295, 0.036043, -0.025604, 0.10937, -0.295005, -0.43255, 0.186445, -0.172402, 0.010711, 0.107959], [240923, "Non fraud", 150810.0, 30.45, -0.868512, 1.204166, -0.357374, 0.769519, 1.056352, -0.411985, 1.260421, -0.146702, -0.384761, 0.818715, 0.277491, 0.123237, -0.941693, 0.60158, -0.848023, -0.941429, -0.193083, 0.268184, 1.153989, 0.108108, 0.03564, 0.653095, -0.490048, -0.383509, -0.004272, -0.432908, 0.029391, -0.305378], [250930, "Non fraud", 155134.0, 303.6, -0.990025, -0.62326, 1.285874, -1.229486, -1.439904, 0.970223, 0.785135, 0.138898, -1.065318, 0.088331, 0.548267, -1.293202, -2.020422, -0.003618, -0.390631, 0.797441, 0.658633, -0.83977, 2.271638, 0.205687, -0.172696, -0.663693, 0.201282, 0.634438, 0.135826, -0.316516, 0.019036, 0.031176], [127272, "Non fraud", 78269.0, 80.98, 1.030535, -0.982782, 1.545135, 0.409869, -1.777236, 0.160891, -1.098408, 0.265557, 2.011921, -0.635381, -1.384367, 0.440979, -0.74728, -1.048294, -1.398161, -0.397054, 0.575215, -0.576055, 0.727111, 0.027137, -0.121203, -0.052533, -0.065001, 0.503388, 0.132778, 1.484551, -0.042444, 0.022601], [159806, "Non fraud", 112982.0, 1.0, 2.127204, -0.16867, -1.765445, 0.043647, 0.371432, -0.581626, 0.035169, -0.154751, 1.056352, -0.047981, -1.632362, -0.836722, -1.533664, 0.774594, 1.136674, 0.010263, -0.696078, 0.540182, 0.079928, -0.314455, 0.200812, 0.647014, -0.048619, 0.061377, 0.383932, -0.406974, -0.008439, -0.057353], [155079, "Non fraud", 104438.0, 1.5, -0.622767, 0.932849, 2.373874, -0.140261, 0.173905, -0.241425, 0.577158, -0.325359, 1.487847, -1.055153, 0.423486, -2.261077, 2.278059, 1.093189, 0.588197, -0.372595, 0.309616, 0.34829, 0.473076, 0.056359, -0.287108, -0.352007, -0.256497, -0.101459, 0.269633, -0.737548, -0.199622, -0.154654], [57961, "Non fraud", 48161.0, 440.88, 0.492578, -1.835185, -0.715533, -0.517454, -0.67527, -0.000141, 0.245158, -0.067299, -1.391094, 0.583066, 1.839514, -0.014639, -0.455646, 0.57022, 0.339502, 0.412671, 0.7632, -1.860653, 0.06737, 0.847926, 0.55109, 0.560765, -0.486844, -0.236709, 0.440425, -0.086759, -0.08359, 0.058196], [83627, "Non fraud", 59947.0, 5.36, 1.304729, 0.064238, -1.296622, -0.480409, 2.135923, 3.18278, -0.50056, 0.803983, -0.074469, -0.219, 0.131625, -0.028007, 0.012062, -0.112156, 1.300432, 0.813253, -0.495383, 0.167166, 0.174097, 0.039617, -0.340628, -1.150287, 0.0923, 0.946295, 0.368472, 0.110265, -0.022475, 0.024227], [250934, "Non fraud", 155136.0, 29.95, -0.154881, 0.358245, 0.143337, -0.17177, 0.701185, -0.189308, 0.468757, 0.071036, 0.626769, -1.28956, -1.533893, -0.335073, -0.613724, -1.647882, -1.488146, -0.19185, 0.906952, 0.393915, 0.006379, -0.032186, 0.212907, 0.862602, -0.290743, 0.577007, 0.175193, 0.789981, 0.024088, 0.066848], [6882, "Fraud", 8808.0, 1.1, -4.617217, 1.695694, -3.114372, 4.328199, -1.873257, -0.989908, -4.577265, 0.472216, 0.472017, -5.576023, 4.802323, -10.833164, 0.104304, -9.405423, -0.807478, -7.552342, -9.802562, -4.120629, 1.740507, -0.039046, 0.48183, 0.146023, 0.117039, -0.217565, -0.138776, -0.424453, -1.002041, 0.89078], [30880, "Non fraud", 36115.0, 11.0, -0.832264, 1.213423, 1.01691, 0.98737, 0.109052, 0.549648, 0.0291, 0.791384, -0.979933, -0.041426, 1.44526, 0.675424, -0.32655, 0.909204, 1.040121, -0.605547, 0.387419, -0.106665, 0.170996, 0.022829, 0.295659, 0.898353, -0.082659, -0.274785, -0.293632, -0.156529, 0.316976, 0.127501], [185580, "Non fraud", 126730.0, 56.0, 2.006324, -0.713541, -1.482374, -0.552911, -0.158326, -0.535414, -0.092721, -0.223448, 1.580131, -0.515371, -1.357735, 0.673044, 0.150996, -0.245339, -0.853111, -0.95319, 0.168721, -0.410636, 0.759139, -0.063289, 0.248872, 1.049281, -0.147207, 0.73628, 0.37526, 1.035165, -0.080463, -0.064599], [229317, "Non fraud", 145878.0, 1.98, 0.104175, 0.84872, -0.260351, -0.833568, 1.484671, -0.236342, 1.159109, -0.211399, -0.307857, -0.670954, 0.565897, 0.17133, -0.26724, -0.908365, -0.949413, 0.511077, -0.137382, 0.480528, 0.340985, -0.029308, -0.241665, -0.514915, 0.027995, 0.095767, -1.087314, -0.011372, 0.007861, 0.019454], [141093, "Non fraud", 84116.0, 40.25, 1.11989, -0.138059, 0.821455, 1.053846, -0.355361, 0.677446, -0.573045, 0.212475, 0.747624, -0.210791, -1.132959, 0.45531, 0.770302, -0.380605, 0.878253, 0.172323, -0.462438, -0.026902, -0.488789, -0.032171, 0.124409, 0.527508, -0.202562, -0.732353, 0.557183, -0.181816, 0.081759, 0.031046], [53421, "Non fraud", 45969.0, 49.9, -1.099054, 0.469159, 1.964596, 1.07768, 0.335675, 2.321662, -0.267541, 0.748641, 0.740536, -0.049074, -1.014887, 0.63943, -0.06537, -0.896797, -1.696142, -0.83239, 0.232978, 0.242396, 2.11783, 0.382377, -0.357843, -0.403513, -0.382423, -1.682748, 0.568699, -0.100599, 0.511616, 0.220745], [257764, "Non fraud", 158332.0, 20.0, 2.00997, -0.248481, -1.070423, 0.300037, -0.193484, -0.939268, 0.091815, -0.324683, 1.001662, -0.240986, -0.846329, 1.058646, 0.823463, -0.129062, -0.494881, -0.755589, -0.041727, -0.645267, 0.189517, -0.162274, 0.105514, 0.656814, 0.016771, 0.075979, 0.211529, 0.192759, -0.019674, -0.058256], [283020, "Non fraud", 171316.0, 1.29, 2.013691, -0.108723, -1.007693, 0.323577, -0.145682, -0.946591, 0.071817, -0.184335, 0.300602, 0.247124, 1.012664, 1.069906, -0.202714, 0.510457, -0.64915, 0.071739, -0.495477, -0.384451, 0.401793, -0.227993, -0.233649, -0.582757, 0.34173, 0.0729, -0.346356, 0.173302, -0.075417, -0.069613], [177289, "Non fraud", 123115.0, 0.89, 2.054701, -0.103682, -1.078893, 0.414627, -0.170064, -1.14502, 0.124409, -0.271656, 0.63943, 0.084494, -0.802524, 0.109679, -0.596004, 0.411428, 0.159248, -0.133134, -0.19423, -0.878271, 0.078951, -0.274551, -0.291475, -0.728708, 0.355611, -0.031227, -0.33531, 0.203356, -0.071677, -0.062063], [164928, "Non fraud", 117083.0, 5.99, 1.9902, -0.713518, -1.752659, -0.676677, 1.720696, 3.847838, -1.263227, 1.028461, 1.017791, 0.06264, -0.164104, 0.309384, 0.003604, 0.01437, 0.962101, 0.293712, -0.63268, -0.026034, -0.485257, -0.118242, 0.243551, 0.798022, 0.159728, 0.769508, -0.178434, 0.663201, -0.00424, -0.055899], [218843, "Non fraud", 141489.0, 79.54, -1.163546, 0.58057, -0.404494, -0.791532, 0.981756, -0.177087, 0.588069, 0.564209, -0.290133, -1.826525, 0.390304, 0.307634, -0.661722, -0.932919, -1.073544, 0.410155, 0.824495, 0.900793, 0.403296, 0.096751, -0.047526, -0.462043, -0.07285, 0.086765, 0.137743, -0.111021, -0.044887, 0.022236], [254463, "Non fraud", 156742.0, 44.04, -1.359178, 1.829664, -1.662362, -0.291546, 0.270954, -1.416927, 1.069138, 0.223802, -0.348764, -0.184066, -1.10131, 0.816161, 0.777417, 0.851135, -0.535002, -1.002253, 0.236386, -0.516288, 0.360635, -0.265653, 0.30983, 1.116236, 0.013904, 0.062471, -0.223382, -0.170969, -0.023647, 0.21547], [38365, "Non fraud", 39366.0, 373.38, 0.593734, -1.772136, -0.354445, -0.435253, -0.821048, 0.28134, -0.082929, 0.061843, -0.994097, 0.507758, 1.581512, 0.12864, -0.545432, 0.233667, -0.327861, 0.199888, 0.973292, -1.941181, 0.26688, 0.699408, 0.472445, 0.603708, -0.43049, -0.229883, 0.461088, -0.060127, -0.051587, 0.049006], [260525, "Non fraud", 159594.0, 7.56, -0.224948, 0.18326, 1.443312, -0.134915, -0.444297, -0.336473, -0.381056, 0.062951, 0.777998, -0.162884, -1.071624, -0.17271, 0.311129, -0.41949, 1.295272, 0.878158, -0.977678, 0.73928, -0.389741, -0.167544, 0.367349, 1.095613, 0.150092, -0.08593, -1.165267, 0.235881, -0.097859, 0.161244], [106718, "Non fraud", 70094.0, 48.4, -0.93385, 0.699394, 2.16486, -0.092721, 0.177376, 0.476995, 0.499504, 0.36523, -0.559783, -0.645886, 0.845512, 0.114846, -0.764421, 0.314823, 0.293131, 0.646044, -0.883828, 0.545404, -1.067263, -0.069799, 0.243552, 0.527205, -0.289289, -0.332121, 0.44509, -0.351964, 0.052029, 0.058816], [246406, "Non fraud", 153161.0, 28.75, 1.94124, -0.550372, -0.22553, 0.51964, -0.904093, -0.528657, -0.673298, -0.012878, 1.334181, 0.004944, -1.011789, 0.127946, -0.333777, -0.156129, 0.448166, 0.28178, -0.396364, -0.034463, -0.343168, -0.190764, 0.173484, 0.666821, 0.160425, 0.033158, -0.319801, 0.571147, -0.022607, -0.044921], [27356, "Non fraud", 34519.0, 14.42, -1.408443, 1.642451, 0.470536, 0.816748, -0.184929, -0.439898, 0.205982, 0.599498, -0.515623, 0.109003, -0.403427, 0.394164, 0.450607, 0.59337, 1.220669, -0.504302, 0.286048, -0.364232, 0.004064, 0.096319, 0.159871, 0.596628, -0.092974, 0.097299, -0.202458, -0.323177, -0.00339, -0.072393], [278651, "Non fraud", 168338.0, 86.4, -0.582676, -1.146141, 1.116856, -2.551918, -0.394296, -0.326503, -0.415209, 0.053554, -1.926413, 0.642819, -1.4109, -1.52179, -0.129819, -0.522986, -0.296158, -0.433785, 0.390071, 0.264442, -0.339538, -0.06289, -0.015317, 0.071302, 0.118059, 0.557649, -0.089412, -0.198885, 0.091253, 0.15088], [37720, "Non fraud", 39077.0, 102.0, -2.68278, -2.028562, 1.745223, -1.157952, -0.143692, -0.807503, -1.154141, 0.436917, -0.293442, 0.078251, -0.691762, -0.753092, -0.287884, -0.617361, 0.121762, 1.247606, 0.393749, -1.33976, -0.568519, 0.103584, 0.353396, 0.968145, -0.776459, 0.182662, -0.000427, -0.209058, 0.256991, -0.585781], [150667, "Fraud", 93860.0, 78.0, -10.850282, 6.727466, -16.760583, 8.425832, -10.252697, -4.192171, -14.077086, 7.168288, -3.683242, -15.239962, 8.030708, -16.060306, 0.27053, -14.952981, -0.241095, -11.866731, -15.48699, -5.748652, 4.130031, -0.646818, 2.541637, 0.135535, -1.023967, 0.406265, 0.106593, -0.026232, -1.46463, -0.411682], [152555, "Non fraud", 97408.0, 15.95, 1.942759, -0.52782, 0.146404, 0.392393, -0.876607, 0.025377, -1.116078, 0.139452, 2.516864, -0.205219, 1.388068, -1.875682, 1.244009, 1.400115, -0.586105, 0.948706, -0.235538, 0.966348, -0.103352, -0.222203, -0.088443, 0.074312, 0.280846, -0.384846, -0.630752, 0.444344, -0.04801, -0.057595], [180497, "Non fraud", 124565.0, 23.95, 2.043572, -0.045925, -1.618907, 0.473198, 0.199009, -1.309266, 0.536385, -0.45908, 0.343307, 0.086127, -0.797048, 0.485528, 0.0957, 0.378287, -0.421902, -0.636134, -0.026322, -0.960529, 0.11886, -0.192291, -0.015269, 0.14769, 0.064708, 0.055465, 0.164195, 0.56108, -0.095659, -0.073533], [228612, "Non fraud", 145585.0, 1.0, -1.358539, 0.75694, 1.244376, -0.872582, -0.40509, -0.484807, -0.158956, 0.566841, 0.031076, -0.430346, 0.556177, 0.362061, -0.604925, 0.352311, -0.155797, 0.801713, -0.742936, 0.777102, -0.213391, -0.184445, 0.28625, 0.793404, -0.001273, 0.107286, -0.125368, 0.640509, -0.066082, 0.118273], [24037, "Non fraud", 33040.0, 58.0, -0.057852, -0.011612, 0.208623, -3.41934, -0.079255, -1.198063, 0.633309, -1.09535, 1.601987, -2.413761, -0.167826, 1.424179, 0.245483, 0.20696, 0.090897, -1.172962, -0.087334, -0.91868, -0.85198, -0.338936, 0.828219, 0.065778, -0.316144, 0.131901, 1.451179, -0.887544, 0.158753, 0.203221], [198488, "Non fraud", 132511.0, 28.75, -0.258282, 0.272863, 1.114647, -1.040659, 0.230587, -0.008531, 0.312598, 0.139521, 0.198815, -0.721082, 0.292118, 1.1379, 0.909357, -0.367025, -1.254646, 0.69135, -1.195184, 0.504232, -0.666806, -0.086567, 0.371753, 1.179884, -0.038428, -0.321376, -0.974738, 0.31885, 0.197817, 0.225075], [222779, "Non fraud", 143113.0, 3.55, 0.511038, 1.063485, -1.447521, -0.129549, 0.926416, -0.46002, 0.047081, -3.100046, -0.557416, -0.945058, -1.006376, 0.84026, 0.477369, 0.953426, -0.454392, -0.809683, -0.075263, -0.500145, 0.126127, 0.538658, -1.067168, 1.157379, -0.13537, 0.735431, 0.622463, -0.105907, 0.169128, 0.339073], [14246, "Non fraud", 25305.0, 19.99, -0.794982, 0.562274, 1.496818, -0.614796, 0.096593, -0.477367, 0.470199, 0.313221, -0.2388, -0.326295, 1.173071, -0.428735, -2.424817, 0.79554, 0.175719, 0.348864, -0.416545, -0.009263, -0.866454, -0.086653, 0.058231, 0.05095, 0.009352, 0.184071, -0.378332, 0.226129, 0.288735, 0.17446], [113834, "Non fraud", 73222.0, 12.0, -1.047911, 0.264798, 2.882793, 1.050493, -1.754437, 1.013074, -1.216518, 0.993989, -0.289283, 0.066573, -1.418042, 0.203715, -0.404378, -0.799671, -1.157621, -2.831097, 1.610435, 0.837103, 0.153897, -0.374125, -0.392708, -0.197803, -0.109727, 0.396181, 0.18198, -0.065889, 0.328321, 0.089068], [94089, "Non fraud", 64726.0, 83.2, 1.400351, -1.410898, 0.267343, -1.642181, -1.324857, 0.196671, -1.312387, 0.083147, -1.724764, 1.576199, 0.075327, -0.806645, 0.330197, -0.277747, 0.275858, 0.414005, -0.276461, 1.24459, 0.267244, -0.151414, -0.046957, 0.07001, -0.215268, -0.852429, 0.426617, -0.054488, 0.030667, 0.016748], [82403, "Non fraud", 59385.0, 2.31, -3.818629, 3.02536, -0.485984, -2.110182, -0.53521, -0.278799, -0.097662, 0.83432, 2.097479, 2.512874, -1.166648, -0.225615, -0.180086, -0.452947, 1.022674, 0.507136, -0.646951, -0.561255, -0.951985, 1.091678, -0.435699, -0.45819, 0.060525, -0.955809, 0.203518, 0.758235, 0.199373, -0.090372], [74052, "Non fraud", 55403.0, 9.99, 1.152138, 0.017441, 1.298882, 1.336636, -0.92034, -0.183504, -0.512457, 0.051714, 0.786909, -0.222356, -0.671898, 0.849665, 0.724139, -0.496954, 0.102626, 0.045495, -0.287361, -0.147277, -0.216439, -0.088495, -0.054075, 0.082964, -0.012994, 0.414958, 0.438069, -0.411646, 0.07687, 0.039935], [74475, "Non fraud", 55604.0, 10.4, 1.482024, -1.169125, 0.693391, -1.504781, -1.672624, -0.305721, -1.404211, 0.060227, -1.746973, 1.613959, 0.793386, -0.628268, -0.006858, -0.208865, 0.225721, 0.168787, 0.035811, 0.978661, -0.024014, -0.337644, -0.038106, 0.247195, -0.044684, -0.007692, 0.335818, -0.098744, 0.044268, 0.012322], [231986, "Non fraud", 147003.0, 120.4, 1.826167, -0.075474, -2.049164, 1.161179, 0.618352, -0.965325, 0.842107, -0.37693, -0.337786, 0.504118, 0.583957, 0.523587, -0.557392, 1.100905, -0.434925, -0.088542, -0.776938, 0.252767, -0.008287, -0.057212, 0.217201, 0.425032, -0.162395, -0.341928, 0.429016, -0.494931, -0.060952, -0.057543], [149838, "Non fraud", 92038.0, 226.23, 0.546071, 0.704508, -0.136619, 5.09956, 0.304371, 1.392945, 1.134897, -0.13789, -0.159107, 1.018394, -0.799866, -2.533523, 2.59486, 1.133692, -2.079692, -0.958406, 1.243181, 0.075646, 1.233283, 0.539373, 0.169883, 0.781122, 0.555181, 0.557744, -0.802981, 0.364089, 0.070347, 0.0945], [116410, "Non fraud", 74265.0, 125.9, -0.733048, -0.363168, 2.286838, -1.373317, -0.985354, 0.42371, -0.158565, 0.11678, -1.087988, -0.072557, -1.472754, -0.376688, 1.630736, -0.745177, 1.321988, -0.491199, -0.715905, 2.063368, -0.573888, 0.044419, -0.086437, 0.016224, -0.048469, -0.56114, 0.093617, 1.20301, -0.00326, 0.078122], [191436, "Non fraud", 129254.0, 88.5, 1.890111, -0.917982, -0.560533, -0.621469, -1.130406, -1.042756, -0.566019, -0.131761, 1.689221, -0.382797, -0.821344, -0.054912, -0.70649, 0.130645, 1.28145, 0.283969, -0.45454, 0.197151, 0.046171, -0.057057, 0.217333, 0.582787, 0.120881, 0.098608, -0.400331, 0.696838, -0.05885, -0.039592], [68296, "Non fraud", 52922.0, 6.83, 1.377421, -0.204553, -0.467552, -1.801727, 0.049758, -0.448479, -0.009651, -0.123108, 0.870217, -0.850343, 0.551999, 1.184416, 0.732319, 0.382584, 0.948847, 0.055193, -0.881667, 0.492697, 1.591366, 0.011084, -0.214955, -0.532572, -0.152891, -0.966137, 0.597981, -0.060681, -0.011633, -0.00857], [15926, "Non fraud", 27365.0, 152.07, -0.323622, -0.366806, 2.32709, -1.007434, -1.32171, 0.178655, 0.597972, -0.492637, -0.2296, 0.358067, -0.692449, -0.428904, 0.614759, -1.592617, -0.926095, 0.460145, 0.421454, -1.476449, 1.082965, 0.289573, 0.028714, 0.609591, -0.035405, 0.42633, -0.41076, -0.404766, -0.213052, -0.324051], [238613, "Non fraud", 149743.0, 0.77, 2.079286, -0.005002, -2.032459, -0.024342, 0.354048, -1.508465, 0.608366, -0.379957, 0.139402, 0.223014, 0.973967, 0.283713, -1.544588, 1.288593, -0.141968, -0.470953, -0.337725, -0.008004, 0.299793, -0.334932, 0.194141, 0.622446, -0.018536, 0.04061, 0.33808, 0.225582, -0.094702, -0.092041], [141730, "Non fraud", 84474.0, 216.91, -0.34743, 0.573127, 2.285867, 2.873957, -0.813793, 1.274212, 1.157524, -0.380696, -0.434917, 0.95165, -1.131257, -0.788801, 0.203142, -0.779528, 0.966937, 0.098302, -0.388389, 0.590304, 0.899623, 0.28511, 0.088791, 0.790234, -0.032354, -0.087281, -0.489496, 0.244877, -0.157219, -0.343029], [152860, "Non fraud", 97490.0, 14.95, 1.970208, -0.389954, 0.256982, 0.557841, -0.964446, -0.422249, -0.936733, -0.084383, 2.597877, -0.405241, 0.101642, -1.913339, 2.347309, 1.007029, -0.021384, 0.626985, 0.048191, 0.256034, -0.496998, -0.175511, -0.111549, 0.097034, 0.313298, -0.044031, -0.598712, 0.442344, -0.036709, -0.04269], [41688, "Non fraud", 40787.0, 0.9, 1.152551, 0.711664, 1.026431, 2.592373, -0.388141, -0.823122, 0.201454, -0.192179, -0.924971, 0.641794, 0.165135, 0.665433, 0.959314, 0.117909, 0.409582, 0.571624, -0.512277, -0.770203, -1.128938, -0.110039, -0.203829, -0.6139, 0.200761, 0.886337, 0.211861, -0.301788, 0.001028, 0.035816], [148929, "Non fraud", 90332.0, 0.89, -0.235398, 0.402829, 0.305239, -1.073265, 1.5218, 0.888827, 0.436544, 0.392916, 1.149522, -1.104312, 1.489635, -2.463858, 0.017984, 2.07832, -1.125456, -0.297908, 0.573326, -0.997257, -1.343787, -0.405189, -0.329959, -0.740832, 0.001585, -1.747425, -0.25273, 0.187594, -0.099555, -0.096935], [77066, "Non fraud", 56871.0, 6.53, 1.114789, 0.405357, 0.601218, 2.248907, 0.071342, 0.420363, -0.146824, 0.279278, -0.783192, 0.832349, 0.923426, -0.064549, -1.284901, 0.748293, 0.277049, 0.83559, -0.667135, -0.159669, -0.859216, -0.237614, -0.204192, -0.737421, 0.134563, -0.389519, 0.144619, -0.229686, -0.003575, 0.009679], [251148, "Non fraud", 155241.0, 9.99, -0.006316, 0.546998, 0.228792, -1.073247, 0.883976, -0.638246, 0.918902, -0.07614, -0.370159, -0.624575, 0.369685, 0.876101, 0.306268, 0.187921, -1.394287, 0.483767, -1.053539, -0.213527, -0.179962, -0.154061, -0.218327, -0.680252, -0.03449, -0.49826, -0.085028, 0.093961, -0.112452, -0.082544], [119815, "Non fraud", 75591.0, 0.0, -0.895828, 0.987769, 2.085479, 1.200862, 1.130164, -0.196441, 0.960378, -0.086019, -1.52437, 0.334364, 0.689897, -0.038324, -0.350992, 0.201693, -0.761791, 0.949659, -1.265441, 0.406072, -1.075592, 0.001521, 0.056459, 0.09114, -0.423554, -0.020799, 0.566804, -0.072593, -0.178259, -0.171176], [74681, "Non fraud", 55704.0, 62.66, 1.176447, 0.086833, -0.259039, 0.912646, 0.481451, 0.410137, 0.106372, 0.00817, 0.061411, -0.005479, -1.435859, -0.167559, 0.34499, 0.271621, 1.290124, 0.269023, -0.704875, -0.059339, -0.325235, -0.005109, 0.042172, 0.085609, -0.305315, -1.319654, 0.768325, -0.170413, 0.022392, 0.014706], [168903, "Non fraud", 119434.0, 136.05, -2.137668, -1.362985, -0.727909, 0.16447, 1.441187, -1.776026, 1.278632, -0.466188, 0.109514, -0.98142, -0.575759, -0.393555, 0.050866, -1.104306, 0.719738, 0.413117, 0.235108, 0.794497, -0.352005, -0.500711, 0.092992, 0.956204, 1.356432, -0.215041, 0.602179, -0.093975, -0.133883, 0.372237], [235474, "Non fraud", 148402.0, 233.29, -1.303719, 1.105589, -3.37912, -0.383921, 0.847778, 1.403939, -0.032561, -1.787864, -1.020774, -1.139009, 0.657432, 0.801861, -1.648165, 2.432764, -0.092343, -1.640373, 1.191874, -1.377021, -1.002134, -0.230821, -0.554459, 2.550605, -0.325024, -1.667217, -1.654295, -0.054046, 0.206256, 0.047341], [159862, "Non fraud", 113009.0, 1.0, 2.119501, -0.123932, -1.755352, 0.026851, 0.473716, -0.47392, 0.070854, -0.170578, 0.942788, -0.078312, -1.462992, -0.424045, -0.792094, 0.631676, 1.103086, -0.080618, -0.685449, 0.362892, 0.006373, -0.272773, 0.214662, 0.729925, -0.051927, 0.022214, 0.39523, -0.403788, -0.000413, -0.056405], [105747, "Non fraud", 69669.0, 43.05, 1.222065, -0.557475, 0.231881, -0.054993, -0.516954, 0.277267, -0.428552, 0.064469, -1.00738, 0.721892, 0.832269, 1.174542, 0.85919, -0.087526, -0.935557, -1.921382, 0.198559, 0.72265, -0.506402, -0.423128, -0.432976, -0.627235, -0.038963, -0.270258, 0.423935, 0.395472, 0.005571, 0.003752], [102486, "Non fraud", 68226.0, 49.0, -0.378726, 0.176414, 2.038723, 1.075694, -0.216415, 0.921706, 0.055936, 0.337719, 0.397505, 0.042557, 0.306726, -0.883845, -2.91478, 0.272855, 0.277785, -0.531775, 0.14617, 0.7936, 0.958591, 0.027322, 0.207481, 0.801599, -0.158665, -0.340407, -0.327219, -0.132057, 0.020642, -0.085085], [135892, "Non fraud", 81448.0, 9.23, -2.201029, 2.135296, -0.082015, -0.079166, -0.824369, -0.347833, -0.465664, 1.384499, 0.152787, -0.204262, -2.052731, 0.058289, -0.386206, 0.611565, -0.368349, 0.157142, 0.264117, -0.124505, 0.606909, 0.10465, -0.222762, -0.569381, -0.039511, -0.459539, 0.307848, 0.316537, 0.269799, 0.147944], [10196, "Non fraud", 15772.0, 87.0, -1.998332, -0.137916, 2.196376, 1.961751, -0.344791, 0.764497, 0.196137, 0.123434, 2.91459, 0.208057, -0.427971, -3.25871, -0.934994, 0.643372, -1.65055, -1.585026, 1.839608, -0.565488, 1.17118, -0.258861, -0.854563, -0.76178, 0.709752, -0.05368, 0.139729, -0.383565, 0.534322, 0.071052], [129900, "Non fraud", 79237.0, 1.0, 1.245801, -0.448697, 0.882059, -0.711534, -1.33374, -0.858295, -0.666356, 0.04526, 2.030706, -1.039229, -0.673748, 0.006008, -1.423716, 0.126413, 1.423815, -0.377789, -0.065683, 0.357184, 0.56516, -0.214347, -0.028209, 0.101153, -0.01902, 0.371669, 0.453354, -0.68197, 0.084611, 0.03233]];
+
+        // Define the dt_args
+        let dt_args = {"paging": false, "scrollCollapse": true, "scrollY": "500px", "layout": {"topStart": "pageLength", "topEnd": "search", "bottomStart": "info", "bottomEnd": "paging"}, "order": [], "searching": false, "warn_on_selected_rows_not_rendered": true, "filtered_row_count": 199100, "fnInfoCallback": function (oSettings, iStart, iEnd, iMax, iTotal, sPre) { return sPre + ' (<a href="https://mwouts.github.io/itables/downsampling.html">downsampled</a> from 199,364x31 to 264x31 as maxBytes=64KB)'; }};
+        dt_args["data"] = data;
+
+        
+        new DataTable(table, dt_args);
+    });
+</script>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Describe features:
+<ul>
+<li>It only provides features transformed with PCA (V1, V2, etc).</li>
+</ul></li>
+<li>The class is the target where 0 means “not fraudulent” and 1 means “fraudulent”</li>
+<li>Drop time.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-simple-evalaution-metric" class="slide level4">
+<h4>A simple evalaution metric</h4>
+<div>
+<ul>
+<li class="fragment">Create a single validation data.</li>
+<li class="fragment">Accuray: <span class="math display">\[\text{accuracy} = \frac{\text{number of correct predictions}}{\text{total number of predictions}}\]</span></li>
+<li class="fragment">Note: we can also use cross-validation.</li>
+</ul>
+</div>
+<aside class="notes">
+<ul>
+<li>A number of possible ways to evaluate machine learning models</li>
+<li>Choose the evaluation metric that makes most sense in your context or which is most common in your discipline<br>
+</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="dummyclassifier-vs-logisticregression" class="slide level4">
+<h4>DummyClassifier vs LogisticRegression</h4>
+<ul>
+<li>DummyClassifier:</li>
+</ul>
+<div id="2697ff4c" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a>dummy <span class="op">=</span> DummyClassifier()</span>
+<span id="cb1-2"><a href=""></a>dummy.fit(X_train, y_train)</span>
+<span id="cb1-3"><a href=""></a>dummy.score(X_valid, y_valid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
+<pre><code>0.9982945995652901</code></pre>
+</div>
+</div>
+<div class="fragment">
+<ul>
+<li>LogisticRegression:</li>
+</ul>
+<div id="a1c57896" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>pipe <span class="op">=</span> make_pipeline(StandardScaler(), LogisticRegression())</span>
+<span id="cb3-2"><a href=""></a>pipe.fit(X_train, y_train)</span>
+<span id="cb3-3"><a href=""></a>pipe.score(X_valid, y_valid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
+<pre><code>0.9992141782310651</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="why-are-the-scores-so-similar" class="slide level4">
+<h4>Why are the scores so similar?</h4>
+<div>
+<ul>
+<li class="fragment">Accuray is not a good metric for imbalanced data!</li>
+<li class="fragment">What can we check if the LR model is outperforming the baseline?
+<ul>
+<li class="fragment">We need a better evaluation metric!</li>
+</ul></li>
+</ul>
+</div>
+<aside class="notes">
+<ul>
+<li>We have many non-fraud transactions and only a small number of fraud transactions.</li>
+<li>Is LR model good enough?</li>
+<li>We need something more informative than accuracy?</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="confusion-matrix" class="title-slide slide level2 center">
+<h2>Confusion matrix</h2>
+
+</section>
+<section id="confusion-matrix-for-logisticregression" class="slide level4">
+<h4>Confusion matrix for LogisticRegression</h4>
+<div id="1abe7fd5" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture1_files/figure-revealjs/cell-6-output-1.png" width="562" height="455"></p>
+</figure>
+</div>
+</div>
+</div>
+<div>
+<ul>
+<li class="fragment">Which error do you think is the most important to the bank?</li>
+</ul>
+</div>
+<aside class="notes">
+<ul>
+<li>Confusion matrix tells us not just if it is wrong, but how much it is wrong.</li>
+<li>Perfect prediction has all values down the diagonal</li>
+<li>Off diagonal entries can often tell us about what is being mis-predicted</li>
+<li>In this case it seems like we are doing really well for the non-fraud transactions, but for the fraudulent transactions, we’re only predicting about 60% to be fradulent.</li>
+<li>Probably the missed fradulent transactions since they would be very costly! There is still some cost associated with investigating the non-fradulent transactions so we need to consider that as well, but to a lesser extent.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="confusion-matrix-for-dummyclassifier" class="slide level4">
+<h4>Confusion matrix for DummyClassifier</h4>
+<div id="bf7942b6" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture1_files/figure-revealjs/cell-7-output-1.png" width="562" height="455"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>Always predict the majority class.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="general-confusion-matrix-for-binary-classifier" class="slide level4">
+<h4>General confusion matrix for binary classifier</h4>
+</section>
+<section id="exercise-which-of-the-following-statements-do-you-agree-with" class="slide level4">
+<h4>Exercise: which of the following statements do you agree with?</h4>
+<div>
+<ul>
+<li class="fragment">In medical diagnosis (“positive” means the person has a disease, “negative” means they don’t), false positives are more damaging than false negatives .</li>
+<li class="fragment">In email spam classification (assume “positive” means the email is spam, “negative” means they it’s not), false positives are more damaging than false negatives.</li>
+</ul>
+</div>
+<aside class="notes">
+<ul>
+<li><p>For the first one, it is probably more damaging if we miss a person that should have gotten a treatment (FN). - People we predict has a disease will likely go through some follow up with a doctor befor ereceiveing treatment.</p></li>
+<li><p>For the second one, it is probably more damaging if we accidentally label a non-spam email as spam (FP), since the recipient could miss important info. They can always manually move a FN to the spam folder.</p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="precision-and-recall" class="title-slide slide level2 center">
+<h2>Precision and recall</h2>
+<p><img data-src="cm-with-metrics.png" width="1000"></p>
+<aside class="notes">
+<ul>
+<li>So now that we have this general matrix, we can define a few general metrics as well.</li>
+<li>How can we distill the information from the confusion matrix into a single number?</li>
+<li>Recall: where missing positives is costly.</li>
+<li><span class="math display">\[ \small \text{precision} = \frac{TP}{TP+FP} = \frac{\text{Correctly\ positive\ predictions}}{\text{All\ positive\ predictions}} \]</span></li>
+<li><span class="math display">\[ \small \text{recall} = \frac{TP}{TP+FN} = \frac{Correctly\ positive\ predictions}{All\ actual\ positives} \]</span></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="exercise" class="slide level4">
+<h4>Exercise</h4>
+<p>Given the following confusion matrix :</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th>Predicted Positive</th>
+<th>Predicted Negative</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Actual Positive</strong></td>
+<td>50</td>
+<td>20</td>
+</tr>
+<tr class="even">
+<td><strong>Actual Negative</strong></td>
+<td>10</td>
+<td>70</td>
+</tr>
+</tbody>
+</table>
+<div class="fragment">
+<ul>
+<li>Calculate <span class="math inline">\(\text{precision} = \frac{TP}{TP+FP}\)</span></li>
+<li>Calculate <span class="math inline">\(\text{recall} = \frac{TP}{TP+FN}\)</span></li>
+</ul>
+</div>
+</section>
+<section id="optimize-for-precision-or-recall" class="slide level4">
+<h4>Optimize for precision or recall?</h4>
+<div>
+<ul>
+<li class="fragment">Optimize precision = TP / (TP + FP)
+<ul>
+<li class="fragment">Minimize FP: make few positive predictions</li>
+</ul></li>
+<li class="fragment">Optimize recall = TP / (TP + FN)
+<ul>
+<li class="fragment">Minimize FN: predict all samples to be positive.</li>
+</ul></li>
+<li class="fragment">F1-score is the harmonic mean of precision and recall: <span class="math display">\[ f1 = 2 \times \frac{ \text{precision} \times \text{recall}}{\text{precision} + \text{recall}}\]</span></li>
+</ul>
+</div>
+<aside class="notes">
+<ul>
+<li>Optimize precision
+<ul>
+<li>Example: make a single positive prediction and it is correct.</li>
+</ul></li>
+<li>It is important to consider both precision and recall, but how do we adjust how much of each we get?</li>
+<li>F1 as a harmonic mean of precision and recall, which could be used in hyperparameter optimization.</li>
+<li>The harmonic mean is used instead of the arithmetic mean because it gives more weight to lower values. If either precision or recall is very low, the F1 score will be low, reflecting that the model’s performance is not good enough in one aspect.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="how-are-we-making-predictions" class="title-slide slide level2 center">
+<h2>How are we making predictions?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><img data-src="logistic.png" style="width:100.0%"></p>
+</div><div class="column" style="width:50%;">
+<div>
+<ul>
+<li class="fragment">What happens to precision and recall if we change the probability threshold?</li>
+<li class="fragment">How do we choose the threshold?</li>
+</ul>
+</div>
+</div></div>
+<aside class="notes">
+<ul>
+<li><p>Lgistic regression gives probability as an outcome, use the threshold of 0.5 to make decision.</p></li>
+<li><p>What happens to precision and recall if we change the probability to a lower number like 0.2?</p></li>
+<li><p>Decreasing the threshold:</p>
+<ul>
+<li>Increases the number of positive predictions</li>
+<li>Identify more examples as “fraud” examples</li>
+<li>More false positives, more true positives.</li>
+<li>Recall would either stay the same or go up and precision is likely to go down (precision may increase if all the new examples after decreasing the threshold are TPs).</li>
+</ul></li>
+<li><p>Increasing the threshold:</p>
+<ul>
+<li>Decreases the number of positive predictions</li>
+<li>Recall would go down or stay the same but precision is likely to go up (precision may go down if TP decrease but FP do not decrease).</li>
+</ul></li>
+<li><p>Key question: How do we decide on the best threshold? It depends on the problem and trade-offs between false positives and false negatives.</p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="precision-recall-curve-precision-and-recall-as-the-threshold-varies" class="slide level4">
+<h4>Precision-recall curve: precision and recall as the threshold varies</h4>
+<div id="489c7b53" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture1_files/figure-revealjs/cell-8-output-1.png" width="489" height="462"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li><p>We can look at all possible thresholds and plot the corresponding precision and recall!</p></li>
+<li><p>As we lower the threshold, the classifier predicts more positives:</p>
+<ul>
+<li>Recall increases because we capture more true positives.</li>
+<li>Precision usually decreases because some of the additional positives are false positives.</li>
+</ul></li>
+<li><p>As we raise the threshold, the classifier predicts fewer positives:</p>
+<ul>
+<li>Precision increases because only the most confident predictions are positive.</li>
+<li>Recall decreases because we miss more true positives.</li>
+</ul></li>
+<li><p>The curve shows the trade-offs between precision and recall across all thresholds.</p></li>
+<li><p>Ideal performance: top-right corner (high precision and high recall).</p></li>
+<li><p>Use cases like fraud detection often require focusing on areas of the curve that favor one metric over the other (e.g., high recall for safety-critical tasks).</p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="which-of-the-red-dots-are-reasonable-trade-offs" class="slide level4">
+<h4>Which of the red dots are reasonable trade offs?</h4>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div id="1b32474a" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture1_files/figure-revealjs/cell-9-output-1.png" width="489" height="462"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div>
+<ul>
+<li class="fragment">Are there “good trade-offs”?</li>
+<li class="fragment">Are there “bad trade-offs”?</li>
+</ul>
+</div>
+</div></div>
+<aside class="notes">
+<ul>
+<li><p>This exercise lets you explore how changing the threshold affects precision and recall.</p></li>
+<li><p>The red dots mark the precision-recall pairs at specific thresholds.</p></li>
+<li><p>Are there “good trade-offs” where you gain more recall without sacrificing too much precision?</p></li>
+<li><p>Are there “bad trade-offs” where you lose a lot of precision for only a small gain in recall?</p></li>
+<li><p>Key takeaway: Understanding these trade-offs is critical for real-world decision-making, especially in tasks like fraud detection or medical diagnostics.</p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="average-precision-ap" class="slide level4">
+<h4>Average precision (AP)</h4>
+<ul>
+<li>AP summarizes the PR curve by calculating the area under the curve.</li>
+</ul>
+<div class="fragment">
+<div id="d42369b9" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture1_files/figure-revealjs/cell-10-output-1.png" width="489" height="462"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li><p>AP computes the weighted mean of precisions achieved at each threshold, with the increase in recall from the previous threshold used as the weight (the area under the PR curve).</p></li>
+<li><p>AP score has a value between 0 (worst) and 1 (best).</p></li>
+<li><p>A high AP score indicates that the classifier performs well across different thresholds.</p></li>
+<li><p>In this example, we compare Logistic Regression (LR) and Support Vector Classifier (SVC).</p></li>
+<li><p>We can see that the SVC classifer performs slighlty better for most thresholds, which means that its AP score is slightly higher, as we can see in the chart.</p></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</div>
+</section>
+<section id="exercise-choose-the-appropriate-evaluation-metric" class="slide level4">
+<h4>Exercise: choose the appropriate evaluation metric</h4>
+<table class="caption-top">
+<colgroup>
+<col style="width: 67%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Scenario</strong></th>
+<th><strong>Metric</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Balance between precision and recall for a threshold</td>
+<td>F1 Score or AP</td>
+</tr>
+<tr class="even">
+<td>Assess performance across all thresholds</td>
+<td>F1 Score or AP</td>
+</tr>
+</tbody>
+</table>
+<aside class="notes">
+<ul>
+<li>F1 score is for a given threshold and measures the quality of <code>predict</code>.</li>
+<li>AP score is a summary across thresholds and measures the quality of <code>predict_proba</code>.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="roc-curve" class="title-slide slide level2 center">
+<h2>ROC curve</h2>
+<ul>
+<li>False positive rate (FPR) and true positive rate (TPR or recall).</li>
+</ul>
+<div id="3d7416c3" class="cell" data-execution_count="10">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture1_files/figure-revealjs/cell-11-output-1.png" width="489" height="462"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<p><span class="math display">\[ TPR = \frac{TP}{TP + FN}\]</span> <span class="math display">\[ FPR  = \frac{FP}{FP + TN}\]</span></p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="area-under-the-roc-curve-auc" class="slide level4">
+<h4>Area under the ROC curve (AUC)</h4>
+<ul>
+<li>AUC measures the ability to rank positive instances higher than negative ones.</li>
+<li>AUC = 1 means a perfect model.</li>
+<li>A random guessing model has AUC = 0.5.</li>
+</ul>
+<aside class="notes">
+<ul>
+<li>What’s the probability that a randomly picked positive point has a higher score according to the classifier than a randomly picked point from the negative class.</li>
+<li>AUC of 1.0 means all positive points have a higher score than all negative points.</li>
+<li>For classification problems with imbalanced classes, using AP score or AUC is often much more meaningful than using accuracy.</li>
+<li>AUC evaluates the model’s ranking capability across all thresholds.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="exercise-1" class="slide level4">
+<h4>Exercise</h4>
+<p>We have a classifier to detect spam emails (positive class represents spam).</p>
+<p>It is important to ensure that critical emails are not mistakenly classified as spam. Which point on the curve would be preferable?</p>
+<p><img data-src="auc_abc.png" width="500"></p>
+<aside class="notes">
+<ul>
+<li>Encourage students to think about the trade-off between FPR and TPR.</li>
+<li>A lower FPR might be preferable, even if it sacrifices some TPR, given the problem’s requirements.</li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="class-imbalance" class="title-slide slide level2 center">
+<h2>Class imbalance</h2>
+<div>
+<ul>
+<li class="fragment">The training set has significantly more examples of one class.</li>
+<li class="fragment">Handling imbalance:
+<ul>
+<li class="fragment">Change the weights of classes.</li>
+<li class="fragment">Oversample minority class or undersample majority class.</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="handling-imbalance-by-chaning-class-weights" class="slide level4">
+<h4>Handling imbalance by chaning class weights</h4>
+<ul>
+<li>We can specify <code>class_weight="balanced"</code> (weight each class inversely proportional to their frequency.)</li>
+</ul>
+<div id="aa3a589a" class="cell" data-execution_count="11">
+<div class="cell-output cell-output-display">
+<div>
+<figure>
+<p><img data-src="lecture1_files/figure-revealjs/cell-12-output-1.png" width="1068" height="442"></p>
+</figure>
+</div>
+</div>
+</div>
+<aside class="notes">
+<ul>
+<li>This sets the weights so that the classes are “equal”.</li>
+<li>We have reduced false negatives but we have many more false positives now …
+<ul>
+<li>Decreases false negatives, which improves recall.</li>
+<li>Increases false positives, which might lower precision.</li>
+</ul></li>
+</ul>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section id="what-did-we-learn-today" class="title-slide slide level2 center">
+<h2>What did we learn today?</h2>
+<div>
+<ul>
+<li class="fragment">Why accuracy is not always a good metric?</li>
+<li class="fragment">Confusion matrix.</li>
+<li class="fragment">Precision, recall, &amp; f1-score.</li>
+<li class="fragment">Precision-recall curves &amp; average precision.</li>
+<li class="fragment">ROC curves &amp; AUC.</li>
+<li class="fragment">Handling class imbalance using <code>class_weight</code>.</li>
+</ul>
+</div>
+<div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+<p>DSCI 573</p>
+</div>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="lecture1_files/libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="lecture1_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="lecture1_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="lecture1_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="lecture1_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="lecture1_files/libs/revealjs/plugin/reveal-chalkboard/plugin.js"></script>
+  <script src="lecture1_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="lecture1_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="lecture1_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="lecture1_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="lecture1_files/libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleChalkboard(event)\"><kbd>b</kbd> Toggle Chalkboard</a></li>\n<li class=\"slide-tool-item\" data-item=\"5\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.toggleNotesCanvas(event)\"><kbd>c</kbd> Toggle Notes Canvas</a></li>\n<li class=\"slide-tool-item\" data-item=\"6\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.downloadDrawings(event)\"><kbd>d</kbd> Download Drawings</a></li>\n<li class=\"slide-tool-item\" data-item=\"7\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'chalkboard': {"buttons":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'none',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'none',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1050,
+
+        height: 700,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, RevealChalkboard, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>
