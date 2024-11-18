@@ -479,9 +479,9 @@ Vincent Liu
 </section>
 <section id="case-study-credit-card-fraud-dataset" class="slide level4">
 <h4>Case study: credit card fraud dataset</h4>
-<div id="b3675313" class="cell" data-execution_count="2">
+<div id="83e55eec" class="cell" data-execution_count="2">
 <div class="cell-output cell-output-display">
-<table id="itables_c70492d4_128a_48e6_8d4e_7bd6e9727081" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
+<table id="itables_072303be_156a_4f47_bec1_3b3fa67bc5b4" class="display nowrap" data-quarto-disable-processing="true" style="table-layout:auto;width:auto;margin:auto;caption-side:bottom">
 <thead>
     <tr style="text-align: right;">
       <th></th>
@@ -588,7 +588,7 @@ Loading ITables v2.2.3 from the internet...
 <script type="module">
     import {DataTable, jQuery as $} from 'https://www.unpkg.com/dt_for_itables@2.0.13/dt_bundle.js';
 
-    document.querySelectorAll("#itables_c70492d4_128a_48e6_8d4e_7bd6e9727081:not(.dataTable)").forEach(table => {
+    document.querySelectorAll("#itables_072303be_156a_4f47_bec1_3b3fa67bc5b4:not(.dataTable)").forEach(table => {
         if (!(table instanceof HTMLTableElement))
             return;
 
@@ -612,7 +612,8 @@ Loading ITables v2.2.3 from the internet...
 <li>It only provides features transformed with PCA (V1, V2, etc).</li>
 </ul></li>
 <li>The class is the target where 0 means “not fraudulent” and 1 means “fraudulent”</li>
-<li>Drop time.</li>
+<li>Drop Time.</li>
+<li>We should also scale Amount.</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -638,7 +639,7 @@ Loading ITables v2.2.3 from the internet...
 <aside class="notes">
 <ul>
 <li>A number of possible ways to evaluate machine learning models</li>
-<li>Choose the evaluation metric that makes most sense in your context or which is most common in your discipline<br>
+<li>Choose the evaluation metric that makes most sense in your context or which is most common in your discipline.<br>
 </li>
 </ul>
 <style type="text/css">
@@ -658,7 +659,7 @@ Loading ITables v2.2.3 from the internet...
 <ul>
 <li>DummyClassifier:</li>
 </ul>
-<div id="c84183aa" class="cell" data-execution_count="3">
+<div id="72cf8de2" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href=""></a>dummy <span class="op">=</span> DummyClassifier()</span>
 <span id="cb1-2"><a href=""></a>dummy.fit(X_train, y_train)</span>
 <span id="cb1-3"><a href=""></a>dummy.score(X_valid, y_valid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -670,7 +671,7 @@ Loading ITables v2.2.3 from the internet...
 <ul>
 <li>LogisticRegression:</li>
 </ul>
-<div id="5ba78d1d" class="cell" data-execution_count="4">
+<div id="dae9318a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href=""></a>pipe <span class="op">=</span> make_pipeline(StandardScaler(), LogisticRegression())</span>
 <span id="cb3-2"><a href=""></a>pipe.fit(X_train, y_train)</span>
 <span id="cb3-3"><a href=""></a>pipe.score(X_valid, y_valid)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -716,7 +717,7 @@ Loading ITables v2.2.3 from the internet...
 </section>
 <section id="confusion-matrix-for-logisticregression" class="slide level4">
 <h4>Confusion matrix for LogisticRegression</h4>
-<div id="769b8250" class="cell" data-execution_count="5">
+<div id="733a659e" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -752,7 +753,7 @@ Loading ITables v2.2.3 from the internet...
 </section>
 <section id="confusion-matrix-for-dummyclassifier" class="slide level4">
 <h4>Confusion matrix for DummyClassifier</h4>
-<div id="c6a911a8" class="cell" data-execution_count="6">
+<div id="059e113a" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -908,21 +909,19 @@ Loading ITables v2.2.3 from the internet...
 </div></div>
 <aside class="notes">
 <ul>
-<li><p>Lgistic regression gives probability as an outcome, use the threshold of 0.5 to make decision.</p></li>
-<li><p>What happens to precision and recall if we change the probability to a lower number like 0.2?</p></li>
-<li><p>Decreasing the threshold:</p>
+<li>Decreasing the threshold:
 <ul>
 <li>Increases the number of positive predictions</li>
 <li>Identify more examples as “fraud” examples</li>
 <li>More false positives, more true positives.</li>
 <li>Recall would either stay the same or go up and precision is likely to go down (precision may increase if all the new examples after decreasing the threshold are TPs).</li>
 </ul></li>
-<li><p>Increasing the threshold:</p>
+<li>Increasing the threshold:
 <ul>
 <li>Decreases the number of positive predictions</li>
 <li>Recall would go down or stay the same but precision is likely to go up (precision may go down if TP decrease but FP do not decrease).</li>
 </ul></li>
-<li><p>Key question: How do we decide on the best threshold? It depends on the problem and trade-offs between false positives and false negatives.</p></li>
+<li>Key question: How do we decide on the best threshold? It depends on the problem and trade-offs between false positives and false negatives.</li>
 </ul>
 <style type="text/css">
         span.MJX_Assistive_MathML {
@@ -938,7 +937,7 @@ Loading ITables v2.2.3 from the internet...
 </section>
 <section id="precision-recall-curve-precision-and-recall-as-the-threshold-varies" class="slide level4">
 <h4>Precision-recall curve: precision and recall as the threshold varies</h4>
-<div id="8e234149" class="cell" data-execution_count="7">
+<div id="890563ef" class="cell" data-execution_count="7">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -980,7 +979,7 @@ Loading ITables v2.2.3 from the internet...
 <h4>Which of the red dots are reasonable trade offs?</h4>
 <div class="columns">
 <div class="column" style="width:50%;">
-<div id="90804547" class="cell" data-execution_count="8">
+<div id="9d1c13dd" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1023,7 +1022,7 @@ Loading ITables v2.2.3 from the internet...
 <li>AP summarizes the PR curve by calculating the area under the curve.</li>
 </ul>
 <div class="fragment">
-<div id="4f4a907f" class="cell" data-execution_count="9">
+<div id="551312ec" class="cell" data-execution_count="9">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1086,7 +1085,7 @@ Loading ITables v2.2.3 from the internet...
 <ul>
 <li>False positive rate (FPR) and true positive rate (TPR or recall).</li>
 </ul>
-<div id="c5af0a15" class="cell" data-execution_count="10">
+<div id="e17b05c6" class="cell" data-execution_count="10">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
@@ -1176,7 +1175,7 @@ Loading ITables v2.2.3 from the internet...
 <ul>
 <li>We can specify <code>class_weight="balanced"</code> (weight each class inversely proportional to their frequency.)</li>
 </ul>
-<div id="3972982f" class="cell" data-execution_count="11">
+<div id="43b70cb7" class="cell" data-execution_count="11">
 <div class="cell-output cell-output-display">
 <div>
 <figure>
