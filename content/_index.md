@@ -47,7 +47,6 @@ sections:
       subtitle: ''
       text: |-
         Instructor, University of British Columbia
-        - DSCI 574 Spatial and Temporal Models, Winter 2025
         - DSCI 573 Feature and Model Selection, Fall 2024
         - DSCI 551 Descriptive Statistics and Probability for Data Science, Fall 2024
         - DSCI 512 Algorithms and Data Structures, Fall 2024
