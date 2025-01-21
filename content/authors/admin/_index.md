@@ -17,12 +17,11 @@ superuser: true
 highlight_name: true
 
 # Role/position/tagline
-role: Postdoctoral Research and Teaching Fellow
+role: Machine Learning Researcher
 
 # Organizations/Affiliations to display in Biography blox
 organizations:
-  - name: The University of British Columbia
-    # url: https://masterdatascience.ubc.ca/programs/vancouver
+  - name: RBC Borealis
 
 # Social network links
 # Need to use another icon? Simply download the SVG icon to your `assets/media/icons/` folder.
@@ -143,4 +142,4 @@ awards:
 
 ## About Me
 
-I am a postdoc at UBC. I completed my PhD and MSc in Computing Science at the [RLAI Lab](http://rlai.ualberta.ca/) at the University of Alberta, advised by Professor [Martha White](http://webdocs.cs.ualberta.ca/~whitem/). My primary research focus is on offline reinforcement learning. I am broadly interested in applying machine learning and reinforcement learning to solve real-world decision-making problems.
+I am a machine learning researcher at RBC Borealis. Previously, I was an instructor at the University of British Columbia, where I taught data science. I completed my PhD in Computing Science at the University of Alberta, advised by Professor [Martha White](http://webdocs.cs.ualberta.ca/~whitem/). My primary research focuses on offline reinforcement learning, and I am broadly interested in applying machine learning and reinforcement learning to solve real-world decision-making problems.
