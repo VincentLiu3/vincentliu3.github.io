@@ -82,15 +82,21 @@ education:
       - Optimization 
       - Financial Engineering
 work:
+  - position: Machine Learning Researcher
+    company_name: RBC Borealis
+    company_url: ''
+    company_logo: ''
+    date_start: 2025-01-01
+    date_end: ''
   - position: Postdoctoral Research and Teaching Fellow
     company_name: University of British Columbia
     company_url: ''
     company_logo: ''
     date_start: 2024-03-01
-    date_end: ''
+    date_end: '2024-12-31'
     summary: |2-
-      - Teach machine learning and statistics courses for the Master of Data Science program
-      - Supervise students on industrial projects
+      - Teach machine learning and statistics courses for the Master of Data Science program.
+      - Supervise students on industrial projects.
 
 # Skills
 # Add your own SVG icons to `assets/media/icons/`
@@ -142,4 +148,4 @@ awards:
 
 ## About Me
 
-I am a machine learning researcher at RBC Borealis. Previously, I was an instructor at the University of British Columbia, where I taught data science. I completed my PhD in Computing Science at the University of Alberta, advised by Professor [Martha White](http://webdocs.cs.ualberta.ca/~whitem/). My primary research focuses on offline reinforcement learning, and I am broadly interested in applying machine learning and reinforcement learning to solve real-world decision-making problems.
+I'm a machine learning researcher at [RBC Borealis](https://rbcborealis.com/). Previously, I was an instructor for the Master of Data Science program at the University of British Columbia. I completed my PhD in Computing Science at the University of Alberta, advised by Professor [Martha White](http://webdocs.cs.ualberta.ca/~whitem/). My primary research focuses on offline reinforcement learning, and I am broadly interested in applying machine learning and reinforcement learning to solve real-world decision-making problems.
